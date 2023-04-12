@@ -1,3 +1,7 @@
+#lw sw sub xor addi srl beq
+
+
+
 import os
 
 def lerArquivo(arquivo):
