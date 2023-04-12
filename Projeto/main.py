@@ -4,13 +4,16 @@ def lerArquivo(arquivo):
 
     try:
         with open("Projeto/Arquivos_teste/"+arquivo) as arq:
-            conteudo = arq.read()
+            texto = arq.readlines()
             print("\nConteudo:")
-            print(conteudo)
+            for linha in texto :
+                print(linha)
+            arq.close()
 
     except FileNotFoundError:
         msg = "Infelizmente, o arquivo " + arquivo + " não existe!"
         print(msg)
+    
         
 
 pasta = "Projeto/Arquivos_teste/"
