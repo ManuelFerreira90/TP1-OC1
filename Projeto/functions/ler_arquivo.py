@@ -8,6 +8,7 @@ def lerArquivo(arquivo):
             x = ''
             for linha in texto :
                 print(linha)
+                linha = linha.rstrip('\n') #remover /n do final
                 x = linha.split(" ")
                 #x = x.strip()
                 print(x)
