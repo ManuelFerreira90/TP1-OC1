@@ -1,3 +1,5 @@
+import functions.montador as mont
+
 def lerArquivo(arquivo):
 
     try:
@@ -8,9 +10,14 @@ def lerArquivo(arquivo):
             x = ''
             for linha in texto :
                 print(linha)
+                #removendo vírgulas
+                linha = linha.replace(",","")
+                #removendo "\n"
+                linha = linha.replace("\n","")
+                #armazendo cada comando em uma posição do vetor
                 x = linha.split(" ")
-                #x = x.strip()
-                print(x)
+                #identificando cada instrução
+                mont.indentificar_funcao(x)
             arq.close()
 
     except FileNotFoundError:

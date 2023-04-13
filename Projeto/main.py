@@ -1,6 +1,7 @@
 #lw sw sub xor addi srl beq
 import os  
 import functions.ler_arquivo as func
+import functions.montador as mont
 
 pasta = "Projeto/Arquivos_teste/"
 files = os.listdir(pasta) 
