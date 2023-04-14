@@ -1,9 +1,15 @@
 def lw(linha):
-    opcode, rd, func3, rs1, immediate, resultado = ''
+    rd = linha[1]
+    rs1 = ''
+    immediate = ''
+    resultado = ''
     opcode = '0000011' 
     func3 = '010'
-    x = list.linha()
-    print(x)
+    #removendo parenteses
+    linha = linha.replace("("," ")
+    linha = linha.replace(")"," ")
+    linha = linha.split(" ")
+    print(opcode)
     #for i in range(linha[3]):
         #immediate = 
     return 

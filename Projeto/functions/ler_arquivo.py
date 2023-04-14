@@ -15,9 +15,9 @@ def lerArquivo(arquivo):
                 #removendo "\n"
                 linha = linha.replace("\n","")
                 #armazendo cada comando em uma posição do vetor
-                x = linha.split(" ")
+                #x = linha.split(" ")
                 #identificando cada instrução
-                mont.indentificar_funcao(x)
+                mont.indentificar_funcao(linha)
             arq.close()
 
     except FileNotFoundError:
