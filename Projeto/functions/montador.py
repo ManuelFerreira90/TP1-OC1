@@ -3,25 +3,55 @@ def lw(linha):
     rd = rd.replace("x","")
     rd = int(rd)
     rd = bin(rd)[2:]
+    rd = list(rd)
+    rd_aux = "00000"
+    rd_aux = list(rd_aux)
     rs1 = linha[3]
     rs1 = rs1.replace("x","")
     rs1 = int(rs1)
     rs1 = bin(rs1)[2:]
+    rs1 = list(rs1)
+    rs1_aux = "00000"
+    rs1_aux = list(rs1_aux)
     immediate = linha[2]
     immediate = int(immediate)
-    immediate = bin(immediate)
+    immediate = bin(immediate)[2:]
+    immediate = list(immediate)
     immediate_aux = "000000000000"
-    x = 0
-    for i in immediate:
-        x += 1
-    i = 0
-    for i in immediate_aux:
-        if(i == 12 - x):
-            immediate_aux[i] = immediate[x]
-            x -=1
     opcode = '0000011' 
     func3 = '010'
-    resultado = immediate_aux + rs1 + func3 + rd + opcode  
+    x = len(immediate) - 1
+    y = len(rd) - 1
+    z = len(rs1) - 1
+    v = 0
+    immediate_aux = list(immediate_aux)
+    
+    for k in range(12): 
+        if(k == 11 - x):
+            immediate_aux[k] = immediate[v]
+            v += 1
+            x -= 1
+    v = 0    
+    for k in range(5):
+        if(k == 4 - y):
+            rd_aux[k] = rd[v]
+            y -=1
+            v += 1
+    v = 0
+    for k in range(5):
+        if(k == 4 - z):
+            rs1_aux[k] = rs1[v]
+            z -=1
+            v += 1
+
+    immediate_aux = ''.join(immediate_aux)
+    rd_aux = ''.join(rd_aux)
+    rs1_aux = ''.join(rs1_aux)
+    resultado = ''
+
+    aux = [immediate_aux] + [rs1_aux] + [func3] + [rd_aux] + [opcode]
+    for i in aux:
+        resultado += i  
     print(resultado)
     return 
 
