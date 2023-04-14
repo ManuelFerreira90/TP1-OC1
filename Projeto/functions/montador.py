@@ -1,17 +1,28 @@
 def lw(linha):
     rd = linha[1]
-    rs1 = ''
-    immediate = ''
-    resultado = ''
+    rd = rd.replace("x","")
+    rd = int(rd)
+    rd = bin(rd)[2:]
+    rs1 = linha[3]
+    rs1 = rs1.replace("x","")
+    rs1 = int(rs1)
+    rs1 = bin(rs1)[2:]
+    immediate = linha[2]
+    immediate = int(immediate)
+    immediate = bin(immediate)
+    immediate_aux = "000000000000"
+    x = 0
+    for i in immediate:
+        x += 1
+    i = 0
+    for i in immediate_aux:
+        if(i == 12 - x):
+            immediate_aux[i] = immediate[x]
+            x -=1
     opcode = '0000011' 
     func3 = '010'
-    #removendo parenteses
-    linha = linha.replace("("," ")
-    linha = linha.replace(")"," ")
-    linha = linha.split(" ")
-    print(opcode)
-    #for i in range(linha[3]):
-        #immediate = 
+    resultado = immediate_aux + rs1 + func3 + rd + opcode  
+    print(resultado)
     return 
 
 def sw(linha):

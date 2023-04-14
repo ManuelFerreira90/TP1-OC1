@@ -10,3 +10,4 @@ print("Arquivos de teste: \n", files)
 num = int(input("\nDigite qual arquivo teste deseja: "))       
 arquivo = files[num]
 func.lerArquivo(arquivo)
+
