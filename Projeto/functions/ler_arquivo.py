@@ -16,7 +16,8 @@ def lerArquivo(arquivo):
                 linha = linha.replace("\n","")
                 #armazendo cada comando em uma posição do vetor
                 #x = linha.split(" ")
-                #identificando cada instrução#removendo parenteses
+                #identificando cada instrução
+                #removendo parenteses
                 linha = linha.replace("("," ")
                 linha = linha.replace(")"," ")
                 linha = linha.split(" ")

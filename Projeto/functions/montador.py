@@ -1,4 +1,5 @@
 def lw(linha):
+    print(linha)
     rd = linha[1]
     rd = rd.replace("x","")
     rd = int(rd)
@@ -7,7 +8,9 @@ def lw(linha):
     rd_aux = "00000"
     rd_aux = list(rd_aux)
     rs1 = linha[3]
+    print(rs1)
     rs1 = rs1.replace("x","")
+    print(rs1)
     rs1 = int(rs1)
     rs1 = bin(rs1)[2:]
     rs1 = list(rs1)
@@ -56,6 +59,27 @@ def lw(linha):
     return 
 
 def sw(linha):
+    print(linha)
+    opcode = '0100011'
+    funct3 = '010'
+    rs2 = linha[1]
+    rs2 = rs2.replace("x", "")
+    rs2 = bin(int(rs2))[2:]
+    print(rs2)
+    rs1 = linha[3]
+    rs1 = rs1.replace("x", "")
+    rs1 = bin(int(rs1))[2:]
+    print(rs1)
+    immediate = int(linha[2])
+    if (immediate <= 31):
+        immediate_4 = bin(immediate)[2:]
+        immediate_11 = '0000000'
+    else:
+        num = 5
+        immediate_4 = bin(immediate)[4:]
+
+    print(immediate_4)
+
     return
 
 def sub(linha):
