@@ -84,7 +84,54 @@ def sw(linha):
     return
 
 def sub(linha):
-    
+    opcode = '0110011'
+    funct3 = '000'
+    funct7 = '0100000'
+    rd = linha[1]
+    rs1 = linha[2]
+    rs2 = linha[3]
+    rd = rd.replace("x","")
+    rs1 = rs1.replace("x","")
+    rs2 = rs2.replace("x","")
+    rs1 = int(rs1)
+    rs1 = bin(rs1)[2:]
+    rs1 = str(rs1)
+    rs2 = int(rs2)
+    rs2 = bin(rs2)[2:]
+    rs2 = str(rs2)
+    rd = int(rd)
+    rd = bin(rd)[2:]
+    rd = str(rd)
+    x = len(rs2) - 1
+    y = len(rd) - 1
+    z = len(rs1) - 1
+    v = 0
+    rd_aux = ['0','0','0','0','0']
+    rs1_aux = ['0','0','0','0','0']
+    rs2_aux = ['0','0','0','0','0']
+    resultado = ''
+    for k in range(5): 
+        if(k == 4 - x):
+            rs2_aux[k] = rs2[v]
+            v += 1
+            x -= 1
+    v = 0    
+    for k in range(5):
+        if(k == 4 - y):
+            rd_aux[k] = rd[v]
+            y -=1
+            v += 1
+    v = 0
+    for k in range(5):
+        if(k == 4 - z):
+            rs1_aux[k] = rs1[v]
+            z -=1
+            v += 1
+    rs2_aux = ''.join(rs2_aux)
+    rd_aux = ''.join(rd_aux)
+    rs1_aux = ''.join(rs1_aux)
+    resultado = funct7 + rs2_aux + rs1_aux + funct3 + rd_aux + opcode
+    print(resultado)
     return 
 
 def xor(linha): 
@@ -169,6 +216,54 @@ def addi(linha):
     return 
 
 def srl(linha): 
+    opcode = '0110011'
+    funct3 = '101'
+    funct7 = '0000000'
+    rd = linha[1]
+    rs1 = linha[2]
+    rs2 = linha[3]
+    rd = rd.replace("x","")
+    rs1 = rs1.replace("x","")
+    rs2 = rs2.replace("x","")
+    rs1 = int(rs1)
+    rs1 = bin(rs1)[2:]
+    rs1 = str(rs1)
+    rs2 = int(rs2)
+    rs2 = bin(rs2)[2:]
+    rs2 = str(rs2)
+    rd = int(rd)
+    rd = bin(rd)[2:]
+    rd = str(rd)
+    x = len(rs2) - 1
+    y = len(rd) - 1
+    z = len(rs1) - 1
+    v = 0
+    rd_aux = ['0','0','0','0','0']
+    rs1_aux = ['0','0','0','0','0']
+    rs2_aux = ['0','0','0','0','0']
+    resultado = ''
+    for k in range(5): 
+        if(k == 4 - x):
+            rs2_aux[k] = rs2[v]
+            v += 1
+            x -= 1
+    v = 0    
+    for k in range(5):
+        if(k == 4 - y):
+            rd_aux[k] = rd[v]
+            y -=1
+            v += 1
+    v = 0
+    for k in range(5):
+        if(k == 4 - z):
+            rs1_aux[k] = rs1[v]
+            z -=1
+            v += 1
+    rs2_aux = ''.join(rs2_aux)
+    rd_aux = ''.join(rd_aux)
+    rs1_aux = ''.join(rs1_aux)
+    resultado = [funct7] + [rs2_aux] + [rs1_aux] + [funct3] + [rd_aux] + [opcode]
+    print(resultado)
     return 
 
 def beq(linha):
