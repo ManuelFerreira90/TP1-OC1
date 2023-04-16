@@ -59,27 +59,39 @@ def lw(linha):
     return 
 
 def sw(linha):
-    print(linha)
+    #print(linha)
     opcode = '0100011'
     funct3 = '010'
     rs2 = linha[1]
     rs2 = rs2.replace("x", "")
     rs2 = bin(int(rs2))[2:]
-    print(rs2)
+    rs2 = format(int(rs2, 2), '05b') #preenchendo rs2 para 5bits
+    #print(rs2)
     rs1 = linha[3]
     rs1 = rs1.replace("x", "")
     rs1 = bin(int(rs1))[2:]
-    print(rs1)
+    rs1 = format(int(rs1, 2), '05b') #preenchendo rs1 para 5bits
+    #print(rs1)
     immediate = int(linha[2])
     if (immediate <= 31):
         immediate_4 = bin(immediate)[2:]
         immediate_11 = '0000000'
     else:
+        immediate_11 = ''
+        immediate_4 = ''
         num = 5
-        immediate_4 = bin(immediate)[4:]
-
-    print(immediate_4)
-
+        # immediate = bin(immediate)
+        # immediate = int(immediate, 2)
+        immediate = format(int(bin(immediate), 2), '012b') # immediate com um total de 12 bits
+        for i in range(12):
+            if(i < 7):
+                immediate_11 += immediate[i]
+            else:
+                immediate_4 += immediate[i]
+    #print(immediate[5])
+    #print("im_11: " + immediate_11 + " im_4: " + immediate_4)
+    instrucao = immediate_11 + str(rs2) + str(rs1) + funct3 + immediate_4 + opcode
+    print(instrucao)
     return
 
 def sub(linha):
