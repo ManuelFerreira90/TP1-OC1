@@ -1,6 +1,3 @@
 lw x7, 4(x10)
-add x2, x0, x1
-sll x1, x2, x2
-or x2, x2, x1
-andi x2, x1, 16
-addi x3, x2, -243
+addi x15, x1, -50
+sw x9, 120(x10)
