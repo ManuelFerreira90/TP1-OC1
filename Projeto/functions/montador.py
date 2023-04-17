@@ -1,4 +1,5 @@
-<<<<<<< Updated upstream
+import functions.criar_arquivo as criar
+
 def converter_oc_e_hex(var, tipo):
     if tipo == 0:
         var = var[2:]
@@ -9,14 +10,9 @@ def converter_oc_e_hex(var, tipo):
         f = bin(int(var, 8))[2:]
         return f
 
-def lw(linha):
+def lw(linha, num, nome_arq):
     c = 1
     h = 0
-=======
-import functions.criar_arquivo as criar
-
-def lw(linha, num, nome_arq):
->>>>>>> Stashed changes
     rd = linha[1]
     rs1 = linha[3]
     immediate = linha[2]
@@ -113,13 +109,9 @@ def sw(linha, num, nome_arq):
     print(instrucao)
     return
 
-<<<<<<< Updated upstream
-def sub(linha):
+def sub(linha, num, nome_arq):
     c = 1
     h = 0
-=======
-def sub(linha, num, nome_arq):
->>>>>>> Stashed changes
     opcode = '0110011'
     funct3 = '000'
     funct7 = '0100000'
@@ -202,15 +194,11 @@ def xor(linha, num, nome_arq):
     #criar.criarArquivo(resultado, num, nome_arq)
     return 
 
-<<<<<<< Updated upstream
-def addi(linha):
+def addi(linha, num, nome_arq):
     c = 1
     h = 0
     opcode = '0010011' 
     func3 = '000'
-=======
-def addi(linha, num, nome_arq):
->>>>>>> Stashed changes
     rd = linha[1]
     rs1 = linha[2]
     immediate = linha[3]
@@ -301,13 +289,9 @@ def addi(linha, num, nome_arq):
     criar.criarArquivo(resultado, num, nome_arq)
     return 
 
-<<<<<<< Updated upstream
-def srl(linha): 
+def srl(linha, num, nome_arq): 
     c = 1
     h = 0
-=======
-def srl(linha, num, nome_arq): 
->>>>>>> Stashed changes
     opcode = '0110011'
     funct3 = '101'
     funct7 = '0000000'
