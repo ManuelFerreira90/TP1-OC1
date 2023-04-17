@@ -27,3 +27,17 @@ def lerArquivo(arquivo):
     except FileNotFoundError:
         msg = "Infelizmente, o arquivo " + arquivo + " não existe!"
         print(msg)
+
+def tratarConteudo(instrucao):
+    #removendo vírgulas
+    instrucao = instrucao.replace(",","")
+    #removendo "\n"
+    instrucao = instrucao.replace("\n","")
+    #armazendo cada comando em uma posição do vetor
+    #x = instrucao.split(" ")
+    #identificando cada instrução
+    #removendo parenteses
+    instrucao = instrucao.replace("("," ")
+    instrucao = instrucao.replace(")"," ")
+    instrucao = instrucao.split(" ")
+    mont.indentificar_funcao(instrucao)
