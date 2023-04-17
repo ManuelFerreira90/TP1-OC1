@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 def converter_oc_e_hex(var, tipo):
     if tipo == 0:
         var = var[2:]
@@ -11,6 +12,11 @@ def converter_oc_e_hex(var, tipo):
 def lw(linha):
     c = 1
     h = 0
+=======
+import functions.criar_arquivo as criar
+
+def lw(linha, num, nome_arq):
+>>>>>>> Stashed changes
     rd = linha[1]
     rs1 = linha[3]
     immediate = linha[2]
@@ -74,9 +80,10 @@ def lw(linha):
     resultado = [immediate_aux] + [rs1_aux] + [func3] + [rd_aux] + [opcode]
     
     print(resultado)
+    criar.criarArquivo(resultado, num, nome_arq)
     return 
 
-def sw(linha):
+def sw(linha, num, nome_arq):
     opcode = '0100011'
     funct3 = '010'
     rs2 = linha[1]
@@ -90,6 +97,7 @@ def sw(linha):
     immediate = int(linha[2])
     if (immediate <= 31):
         immediate_4 = bin(immediate)[2:]
+        immediate_4 = format(int(immediate_4, 2), '05b')
         immediate_11 = '0000000'
     else:
         immediate_11 = ''
@@ -101,12 +109,17 @@ def sw(linha):
             else:
                 immediate_4 += immediate[i]
     instrucao = immediate_11 + str(rs2) + str(rs1) + funct3 + immediate_4 + opcode
+    criar.criarArquivo(instrucao, num, nome_arq)
     print(instrucao)
     return
 
+<<<<<<< Updated upstream
 def sub(linha):
     c = 1
     h = 0
+=======
+def sub(linha, num, nome_arq):
+>>>>>>> Stashed changes
     opcode = '0110011'
     funct3 = '000'
     funct7 = '0100000'
@@ -181,16 +194,23 @@ def sub(linha):
     resultado = [funct7] + [rs2_aux] + [rs1_aux] + [funct3] + [rd_aux] + [opcode]
     
     print(resultado)
+    criar.criarArquivo(resultado, num, nome_arq)
     return 
 
-def xor(linha): 
+def xor(linha, num, nome_arq): 
+
+    #criar.criarArquivo(resultado, num, nome_arq)
     return 
 
+<<<<<<< Updated upstream
 def addi(linha):
     c = 1
     h = 0
     opcode = '0010011' 
     func3 = '000'
+=======
+def addi(linha, num, nome_arq):
+>>>>>>> Stashed changes
     rd = linha[1]
     rs1 = linha[2]
     immediate = linha[3]
@@ -278,11 +298,16 @@ def addi(linha):
     resultado = [immediate_aux] + [rs1_aux] + [func3] + [rd_aux] + [opcode]
      
     print(resultado)
+    criar.criarArquivo(resultado, num, nome_arq)
     return 
 
+<<<<<<< Updated upstream
 def srl(linha): 
     c = 1
     h = 0
+=======
+def srl(linha, num, nome_arq): 
+>>>>>>> Stashed changes
     opcode = '0110011'
     funct3 = '101'
     funct7 = '0000000'
@@ -357,23 +382,25 @@ def srl(linha):
     resultado = [funct7] + [rs2_aux] + [rs1_aux] + [funct3] + [rd_aux] + [opcode]
     
     print(resultado)
+    criar.criarArquivo(resultado, num, nome_arq)
     return 
 
-def beq(linha):
+def beq(linha, num, nome_arq):
+    #criar.criarArquivo(resultado, num, nome_arq)
     return
 
-def indentificar_funcao(x):
+def indentificar_funcao(x, num, arq):
     if x[0] == 'lw':
-        lw(x)
+        lw(x, num, arq)
     elif x[0] == 'sw':
-        sw(x)
+        sw(x, num, arq)
     elif x[0] == 'sub':
-        sub(x)
+        sub(x, num, arq)
     elif x[0] == 'xor':
-        xor(x)
+        xor(x, num, arq)
     elif x[0] == 'addi':
-        addi(x)
+        addi(x, num, arq)
     elif x[0] == 'srl':
-        srl(x)
+        srl(x, num, arq)
     elif x[0] == 'beq':
-        beq(x)
+        beq(x, num, arq)

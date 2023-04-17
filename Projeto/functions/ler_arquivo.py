@@ -1,7 +1,7 @@
 import functions.montador as mont
 
 def lerArquivo(arquivo):
-
+    
     try:
         with open("Projeto/Arquivos_teste/"+arquivo) as arq:
             texto = arq.readlines()
@@ -21,7 +21,8 @@ def lerArquivo(arquivo):
                 linha = linha.replace("("," ")
                 linha = linha.replace(")"," ")
                 linha = linha.split(" ")
-                mont.indentificar_funcao(linha)
+                num = 1
+                mont.indentificar_funcao(linha, num, arquivo)
             arq.close()
 
     except FileNotFoundError:
@@ -30,6 +31,7 @@ def lerArquivo(arquivo):
 
 def tratarConteudo(instrucao):
     #removendo vírgulas
+    x = ''
     instrucao = instrucao.replace(",","")
     #removendo "\n"
     instrucao = instrucao.replace("\n","")
@@ -40,4 +42,5 @@ def tratarConteudo(instrucao):
     instrucao = instrucao.replace("("," ")
     instrucao = instrucao.replace(")"," ")
     instrucao = instrucao.split(" ")
-    mont.indentificar_funcao(instrucao)
+    num = 2
+    mont.indentificar_funcao(instrucao, num, x)
