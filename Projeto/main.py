@@ -22,6 +22,7 @@ while(num != 9):
 
     elif num == 2:
         instrucao = input("Digite sua instrucao assembly: ")
+        func.tratarConteudo(instrucao)
     elif num == 9:
         print("Encerrando...")
     else:
