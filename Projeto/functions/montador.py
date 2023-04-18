@@ -370,7 +370,36 @@ def srl(linha, num, nome_arq):
     return 
 
 def beq(linha, num, nome_arq):
-    #criar.criarArquivo(resultado, num, nome_arq)
+    #beq rs1, rs2, L1
+    #imm[12]  imm[10:5] | rs2 |rs1 | funct3| imm[4:1] imm[11] |opcode
+    opcode = '1100011'
+    funct3 = '000'
+    rs1 = linha[1]
+    rs1 = rs1.replace("x", "")
+    rs1 = bin(int(rs1))[2:]
+    rs1 = format(int(rs1, 2), '05b') #preenchendo rs1 para 5bits
+    rs2 = linha[2]
+    rs2 = rs2.replace("x", "")
+    rs2 = bin(int(rs2))[2:]
+    rs2 = format(int(rs2, 2), '05b') #preenchendo rs2 para 5bits
+
+    immediate = int(linha[2])
+    if (immediate <= 31):
+        immediate_4 = bin(immediate)[2:]
+        immediate_4 = format(int(immediate_4, 2), '05b')
+        immediate_11 = '0000000'
+    else:
+        immediate_11 = ''
+        immediate_4 = ''
+        immediate = format(int(bin(immediate), 2), '012b') # immediate com um total de 12 bits
+        for i in range(12):
+            if(i < 7):
+                immediate_11 += immediate[i]
+            else:
+                immediate_4 += immediate[i]
+    instrucao = immediate_11 + str(rs2) + str(rs1) + funct3 + immediate_4 + opcode
+   # criar.criarArquivo(instrucao, num, nome_arq)
+    print(instrucao)
     return
 
 def indentificar_funcao(x, num, arq):
