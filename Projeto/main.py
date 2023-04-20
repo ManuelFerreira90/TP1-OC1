@@ -13,7 +13,7 @@ while(num != 9):
     #Limpar tela do terminal
     os.system('clear')
     if num == 1:
-        pasta = "Projeto/Arquivos_teste/"
+        pasta = "./Projeto/Arquivos_teste/"
         files = os.listdir(pasta) 
         print("Arquivos de teste: \n", files)
         num = int(input("\nDigite qual arquivo teste deseja: "))       

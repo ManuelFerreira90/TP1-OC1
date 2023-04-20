@@ -73,8 +73,7 @@ def lw(linha, num, nome_arq):
     rs1_aux = ''.join(rs1_aux)
     resultado = ''
 
-    resultado = [immediate_aux] + [rs1_aux] + [func3] + [rd_aux] + [opcode]
-    
+    resultado = immediate_aux + rs1_aux + func3 + rd_aux + opcode
     print(resultado)
     criar.criarArquivo(resultado, num, nome_arq)
     return 
@@ -183,8 +182,7 @@ def sub(linha, num, nome_arq):
     rs2_aux = ''.join(rs2_aux)
     rd_aux = ''.join(rd_aux)
     rs1_aux = ''.join(rs1_aux)
-    resultado = [funct7] + [rs2_aux] + [rs1_aux] + [funct3] + [rd_aux] + [opcode]
-    
+    resultado = funct7 + rs2_aux + rs1_aux + funct3 + rd_aux + opcode
     print(resultado)
     criar.criarArquivo(resultado, num, nome_arq)
     return 
@@ -300,8 +298,7 @@ def addi(linha, num, nome_arq):
     rs1_aux = ''.join(rs1_aux)
     resultado = ''
     
-    resultado = [immediate_aux] + [rs1_aux] + [func3] + [rd_aux] + [opcode]
-     
+    resultado = immediate_aux + rs1_aux + func3 + rd_aux + opcode
     print(resultado)
     criar.criarArquivo(resultado, num, nome_arq)
     return 
@@ -380,8 +377,7 @@ def srl(linha, num, nome_arq):
     rs2_aux = ''.join(rs2_aux)
     rd_aux = ''.join(rd_aux)
     rs1_aux = ''.join(rs1_aux)
-    resultado = [funct7] + [rs2_aux] + [rs1_aux] + [funct3] + [rd_aux] + [opcode]
-    
+    resultado = funct7 + rs2_aux + rs1_aux + funct3 + rd_aux + opcode
     print(resultado)
     criar.criarArquivo(resultado, num, nome_arq)
     return 
@@ -405,9 +401,7 @@ def beq(linha, num, nome_arq):
     immediate = format(int(immediate, 2), '012b')
     imm10_5 = ''
     imm4_1 = ''
-    print(immediate)
     for i in range(12):
-        print(immediate[i])
         if(i > 0 and i < 7):
             imm10_5 += immediate[i]
         elif(i > 6 and i < 11):
