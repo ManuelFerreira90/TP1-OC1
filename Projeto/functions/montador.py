@@ -383,22 +383,21 @@ def beq(linha, num, nome_arq):
     rs2 = bin(int(rs2))[2:]
     rs2 = format(int(rs2, 2), '05b') #preenchendo rs2 para 5bits
 
-    immediate = int(linha[2])
-    if (immediate <= 31):
-        immediate_4 = bin(immediate)[2:]
-        immediate_4 = format(int(immediate_4, 2), '05b')
-        immediate_11 = '0000000'
-    else:
-        immediate_11 = ''
-        immediate_4 = ''
-        immediate = format(int(bin(immediate), 2), '012b') # immediate com um total de 12 bits
-        for i in range(12):
-            if(i < 7):
-                immediate_11 += immediate[i]
-            else:
-                immediate_4 += immediate[i]
-    instrucao = immediate_11 + str(rs2) + str(rs1) + funct3 + immediate_4 + opcode
-   # criar.criarArquivo(instrucao, num, nome_arq)
+    immediate = linha[3]
+    immediate = bin(int(immediate))[2:]
+    immediate = format(int(immediate, 2), '012b')
+    imm10_5 = ''
+    imm4_1 = ''
+    print(immediate)
+    for i in range(12):
+        print(immediate[i])
+        if(i > 0 and i < 7):
+            imm10_5 += immediate[i]
+        elif(i > 6 and i < 11):
+            imm4_1 += immediate[i]
+    # print("\n\n" + immediate[11] + "-" + imm10_5 + "-" + str(rs2) + "-" + str(rs1) + "-" + funct3 + "-" + imm4_1 + "-" + immediate[10] + "-" + opcode)
+    instrucao = immediate[11] + imm10_5 + str(rs2) + str(rs1) + funct3 + imm4_1 + immediate[10] + opcode
+    criar.criarArquivo(instrucao, num, nome_arq)
     print(instrucao)
     return
 
