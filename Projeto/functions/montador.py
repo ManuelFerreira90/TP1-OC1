@@ -190,8 +190,36 @@ def sub(linha, num, nome_arq):
     return 
 
 def xor(linha, num, nome_arq): 
+    #xor x9,x10,x12
+    opcode = '1100011'
+    funct3 = '100'
+    funct7 = '0000000'
+    print(linha)
 
-    #criar.criarArquivo(resultado, num, nome_arq)
+    # xs = str(linha[1]).replace("x", "") 
+
+    # print(linha)
+
+
+    rd = linha[1]
+    rd = str(rd).replace("x","")
+    rd = bin(int(rd))[2:]
+    rd = format(int(rd, 2), '05b')
+
+    rs1 = linha[2]
+    rs1 = str(rs1).replace("x", "")
+    rs1 = bin(int(rs1))[2:]
+    rs1 = format(int(rs1, 2), '05b')
+
+    rs2 = linha[3]
+    rs2 = str(rs2).replace("x", "")
+    rs2 = bin(int(rs2))[2:]
+    rs2 = format(int(rs2, 2), '05b')
+
+    print(funct7 + "-" + str(rs2) + "-" + str(rs1) + "-" + funct3 + "-" + rd + "-" + opcode)
+    # instrucao = funct7 + str(rs2) + str(rs1) + funct3 + rd + opcode
+    # criar.criarArquivo(instrucao, num, nome_arq)
+    # print(instrucao)
     return 
 
 def addi(linha, num, nome_arq):
@@ -395,7 +423,6 @@ def beq(linha, num, nome_arq):
             imm10_5 += immediate[i]
         elif(i > 6 and i < 11):
             imm4_1 += immediate[i]
-    # print("\n\n" + immediate[11] + "-" + imm10_5 + "-" + str(rs2) + "-" + str(rs1) + "-" + funct3 + "-" + imm4_1 + "-" + immediate[10] + "-" + opcode)
     instrucao = immediate[11] + imm10_5 + str(rs2) + str(rs1) + funct3 + imm4_1 + immediate[10] + opcode
     criar.criarArquivo(instrucao, num, nome_arq)
     print(instrucao)
