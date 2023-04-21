@@ -10,6 +10,7 @@ def converter_oc_e_hex(var, tipo):
         f = bin(int(var, 8))[2:]
         return f
 
+#falta immediate receber maior 32 bits
 def lw(linha, num, nome_arq):
     c = 1
     h = 0
@@ -37,7 +38,28 @@ def lw(linha, num, nome_arq):
         rs1 = int(rs1)
         rs1 = bin(rs1)[2:]
     
-    immediate = bin(int(immediate))[2:]
+    if immediate[0] == '0' and immediate[1] == 'x':
+        immediate = converter_oc_e_hex(immediate,h)
+    elif immediate[0] == '0' and immediate[1] == 'c':
+        immediate = converter_oc_e_hex(immediate,c)     
+    elif immediate[0] =='-':
+        complemento_II = True
+        immediate = int(immediate)
+        immediate = immediate * -1
+        immediate = list(bin(immediate)[2:])
+        for k in range(len(immediate)):
+            if(immediate[k] == "0"):
+                immediate[k] = "1"
+            else:
+                immediate[k] = "0"
+        aux = len(immediate)
+        immediate = int(''.join(immediate),2) + 1 
+        immediate = bin(immediate)[2:]
+        immediate = immediate.zfill(aux)
+    else:
+        immediate = immediate.replace("x","")
+        immediate = int(immediate)
+        immediate = bin(immediate)[2:]
     
     rd_aux = ['0','0','0','0','0']
     rs1_aux = ['0','0','0','0','0']
@@ -78,6 +100,7 @@ def lw(linha, num, nome_arq):
     criar.criarArquivo(resultado, num, nome_arq)
     return 
 
+#falta immediate receber outras bases
 def sw(linha, num, nome_arq):
     opcode = '0100011'
     funct3 = '010'
@@ -209,6 +232,7 @@ def xor(linha, num, nome_arq):
     print(instrucao)
     return 
 
+#falta immediate recerber mais que 32 bits
 def addi(linha, num, nome_arq):
     c = 1
     h = 0
@@ -243,11 +267,7 @@ def addi(linha, num, nome_arq):
     if immediate[0] == '0' and immediate[1] == 'x':
         immediate = converter_oc_e_hex(immediate,h)
     elif immediate[0] == '0' and immediate[1] == 'c':
-        immediate = converter_oc_e_hex(immediate,c)
-    elif immediate[0] == 'x':
-        immediate = immediate.replace("x","")
-        immediate = int(immediate)
-        immediate = bin(immediate)[2:]
+        immediate = converter_oc_e_hex(immediate,c)     
     elif immediate[0] =='-':
         complemento_II = True
         immediate = int(immediate)
@@ -262,6 +282,10 @@ def addi(linha, num, nome_arq):
         immediate = int(''.join(immediate),2) + 1 
         immediate = bin(immediate)[2:]
         immediate = immediate.zfill(aux)
+    else:
+        immediate = immediate.replace("x","")
+        immediate = int(immediate)
+        immediate = bin(immediate)[2:]
 
     immediate_aux = ['0','0','0','0','0','0','0','0','0','0','0','0']
     rd_aux = ['0','0','0','0','0']
@@ -382,6 +406,7 @@ def srl(linha, num, nome_arq):
     criar.criarArquivo(resultado, num, nome_arq)
     return 
 
+#falta immediate receber outras bases
 def beq(linha, num, nome_arq):
     #beq rs1, rs2, L1
     #imm[12]  imm[10:5] | rs2 |rs1 | funct3| imm[4:1] imm[11] |opcode
@@ -397,6 +422,7 @@ def beq(linha, num, nome_arq):
     rs2 = format(int(rs2, 2), '05b') #preenchendo rs2 para 5bits
 
     immediate = linha[3]
+    immediate = str(immediate)
     immediate = bin(int(immediate))[2:]
     immediate = format(int(immediate, 2), '012b')
     imm10_5 = ''
@@ -411,6 +437,248 @@ def beq(linha, num, nome_arq):
     print(instrucao)
     return
 
+#falta immediate receber mais que 32 bits
+def jalr(linha, num, nome_arq):
+    c = 1
+    h = 0
+    complemento_II = False
+    opcode = '1100111'
+    funct3 = '000'
+    rd = linha[1]
+    rs1 = linha[2]
+    immediate = linha[3]
+    rd = str(rd)
+    rs1 = str(rs1)
+    immediate = str(immediate)
+    
+    rd = rd.replace("x","")
+    rd = int(rd)
+    rd = bin(rd)[2:]
+    
+    rs1 = rs1.replace("x","")
+    rs1 = int(rs1)
+    rs1 = bin(rs1)[2:]
+    
+    if immediate[0] == '0' and immediate[1] == 'x':
+        immediate = converter_oc_e_hex(immediate,h)
+    elif immediate[0] == '0' and immediate[1] == 'c':
+        immediate = converter_oc_e_hex(immediate,c)
+    elif immediate[0] =='-':
+        complemento_II = True
+        immediate = int(immediate)
+        immediate = immediate * -1
+        immediate = list(bin(immediate)[2:])
+        for k in range(len(immediate)):
+            if(immediate[k] == "0"):
+                immediate[k] = "1"
+            else:
+                immediate[k] = "0"
+        aux = len(immediate)
+        immediate = int(''.join(immediate),2) + 1 
+        immediate = bin(immediate)[2:]
+        immediate = immediate.zfill(aux)
+    else:
+        immediate = immediate.replace("x","")
+        immediate = int(immediate)
+        immediate = bin(immediate)[2:]
+    
+    immediate_aux = ['0','0','0','0','0','0','0','0','0','0','0','0']
+    rd_aux = ['0','0','0','0','0']
+    rs1_aux = ['0','0','0','0','0']
+    
+    x = len(immediate) - 1
+    y = len(rd) - 1
+    z = len(rs1) - 1
+    v = 0
+
+    for k in range(12): 
+        if(k == 11 - x):
+            immediate_aux[k] = immediate[v]
+            v += 1
+            x -= 1
+        elif(complemento_II == True):
+            immediate_aux[k] = '1'
+    v = 0  
+    for k in range(5):
+        if(k == 4 - y):
+            rd_aux[k] = rd[v]
+            y -=1
+            v += 1
+    v = 0
+    for k in range(5):
+        if(k == 4 - z):
+            rs1_aux[k] = rs1[v]
+            z -=1
+            v += 1
+
+    immediate_aux = ''.join(immediate_aux)
+    rd_aux = ''.join(rd_aux)
+    rs1_aux = ''.join(rs1_aux)
+    resultado = ''
+    
+    resultado = [immediate_aux] + [rs1_aux] + [funct3] + [rd_aux] + [opcode]
+    print(resultado)
+    #criar.criarArquivo(resultado, num, nome_arq)
+    return
+
+#compressed function 16bits
+def c_mv(linha, num, nome_arq):
+    opcode = '10'
+    funct4 = '100'
+    rs1 = '0'
+    
+    rd = linha[1]
+    rs2 = linha[2]
+    
+    rd = rd.replace("x","")
+    rs2 = rs2.replace("x","")
+    rd = int(rd)
+    rd = bin(rd)[2:]
+    rs2 = int(rs2)
+    rs2 = bin(rs2)[2:]
+    
+    rd = str(rd)
+    rs2 = str(rs2)
+   
+    rd_aux = ['0','0','0','0','0']
+    rs2_aux = ['0','0','0','0','0']
+    
+    y = len(rd) - 1
+    z = len(rs1) - 1
+    v = 0
+  
+    for k in range(5):
+        if(k == 4 - y):
+            rd_aux[k] = rd[v]
+            y -=1
+            v += 1
+    v = 0
+    for k in range(5):
+        if(k == 4 - z):
+            rs2_aux[k] = rs2[v]
+            z -=1
+            v += 1
+
+    rd_aux = ''.join(rd_aux)
+    rs2_aux = ''.join(rs2_aux)
+    resultado = ''
+    
+    resultado = [funct4] + [rs1] + [rd_aux] + [rs2_aux] + [opcode]
+    print(resultado)
+    #criar.criarArquivo(resultado, num, nome_arq)
+    return
+
+#compressed function 16bits
+def c_jr(linha, num, nome_arq):
+    opcode = '10'
+    funct3 = '100'
+    immediate = '00000'
+    rd = '0'
+    rs1 = linha[3]
+    rs1 = str(rs1)
+    rs1 = rs1.replace("x","")
+    rs1 = int(rs1)
+    rs1 = bin(rs1)[2:]
+    
+    rs1_aux = ['0','0','0','0','0']
+    
+    z = len(rs1) - 1
+    v = 0
+    
+    for k in range(5):
+        if(k == 4 - z):
+            rs1_aux[k] = rs1[v]
+            z -=1
+            v += 1
+
+    rs1_aux = ''.join(rs1_aux)
+    resultado = ''
+
+    resultado = [funct3] + [rd] + [rs1_aux] + [immediate] + [opcode]
+    print(resultado)
+    #criar.criarArquivo(resultado, num, nome_arq)
+    return
+    
+#compressed function 16bits
+def c_li(linha, num, nome_arq):
+    c = 1
+    h = 0
+    opcode = '01'
+    funct3 = '010'
+    rd = linha[1]
+    immediate = linha[2]
+    
+    rd = str(rd)
+    rd = rd.replace("x","")
+    rd = int(rd)
+    rd = bin(rd)[2:]
+    
+    immediate = str(immediate)
+    complemento_II = False
+    
+    if immediate[0] == '0' and immediate[1] == 'x':
+        immediate = converter_oc_e_hex(immediate,h)
+    elif immediate[0] == '0' and immediate[1] == 'c':
+        immediate = converter_oc_e_hex(immediate,c)     
+    elif immediate[0] =='-':
+        complemento_II = True
+        immediate = int(immediate)
+        immediate = immediate * -1
+        immediate = list(bin(immediate)[2:])
+        for k in range(len(immediate)):
+            if(immediate[k] == "0"):
+                immediate[k] = "1"
+            else:
+                immediate[k] = "0"
+        aux = len(immediate)
+        immediate = int(''.join(immediate),2) + 1 
+        immediate = bin(immediate)[2:]
+        immediate = immediate.zfill(aux)
+    else:
+        immediate = immediate.replace("x","")
+        immediate = int(immediate)
+        immediate = bin(immediate)[2:]
+
+    immediate_aux = ['0']
+    immediate2 = ['0','0','0','0','0']
+    rd_aux = ['0','0','0','0','0']
+    
+    x = len(immediate) - 1
+    y = len(rd) - 1
+    v = 0
+
+    for k in range(6): 
+        if k == 0:
+            if(k == 5 - x):
+                immediate_aux[k] = immediate[v]
+                v += 1
+                x -= 1
+                
+        else:
+            if(k == 5 - x):
+                immediate2[k-1] = immediate[v]
+                v += 1
+                x -= 1
+        
+    v = 0    
+    for k in range(5):
+        if(k == 4 - y):
+            rd_aux[k] = rd[v]
+            y -=1
+            v += 1
+    v = 0
+    
+    rd_aux = ''.join(rd_aux)
+    immediate_aux = ''.join(immediate_aux)
+    immediate2 = ''.join(immediate2)
+    resultado = ''
+
+
+    resultado = [funct3] + [immediate_aux] + [rd_aux] + [immediate2] + [opcode]
+    print(resultado)
+    #criar.criarArquivo(resultado, num, nome_arq)
+    return 
+    
 def indentificar_funcao(x, num, arq):
     if x[0] == 'lw':
         lw(x, num, arq)
@@ -426,3 +694,11 @@ def indentificar_funcao(x, num, arq):
         srl(x, num, arq)
     elif x[0] == 'beq':
         beq(x, num, arq)
+    elif x[0] == 'jalr':
+        jalr(x, num, arq)
+    elif x[0] == 'mv':
+        c_mv(x, num, arq)
+    elif x[0] == 'jr':
+        c_jr(x, num, arq)   
+    elif x[0] == 'li':
+        c_li(x, num, arq)  
