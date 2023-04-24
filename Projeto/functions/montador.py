@@ -391,15 +391,14 @@ def beq(linha, num, nome_arq):
             immediate = "{:1>{}}".format(immediate, 12)
         elif immediate[0] == '0' and immediate[1] == 'x':
             immediate = converter_oc_e_hex(immediate, h)
-            if(int(immediate) < -2048 or int(immediate) > 2047):
+            if(int(immediate, 2) < -2048 or int(immediate, 2) > 2047):
                 print("ERRO: out of range")
-                return
+                return 
         elif immediate[0] == '0' and immediate[1] == 'c':
             immediate = converter_oc_e_hex(immediate, c)
-            print(int(immediate, 10))
-            if(int(immediate, 10) < -2048 or int(immediate) > 2047):
+            if(int(immediate, 2) < -2048 or int(immediate, 2) > 2047):
                 print("ERRO: out of range")
-                return  
+                return 
         else:
             immediate = immediate.replace("x","")
             immediate = int(immediate)
