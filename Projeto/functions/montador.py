@@ -13,11 +13,15 @@ def converter_oc_e_hex(var, tipo):
     elif tipo == 3: #Convertendo a instrucao de 32 bits de bin para octal
         f = oct(int(var, 2))[2:]
         return f
+    elif tipo == 4:
+        f = var[2:]
+        return f
 
 #100% funcional
 def lw(linha, num, nome_arq):
     c = 1
     h = 0
+    b = 4
     rd = linha[1]
     rs1 = linha[3]
     immediate = linha[2]
@@ -40,82 +44,11 @@ def lw(linha, num, nome_arq):
             verificar = int(verificar,2)
         elif immediate[0] == '0' and immediate[1] == 'c':
             verificar = converter_oc_e_hex(immediate,c)
-            verificar = int(verificar,2) 
-        else:
-            verificar = int(immediate)
-    else:
-            verificar = int(immediate)
-    if verificar > 2047 or verificar < -2048:
-        return print("Erro: Immediate não cabe em 12 bits")
-    
-    if(x > 1):
-        if immediate[0] =='-':
-            complemento_II = True
-            immediate = int(immediate)
-            immediate = immediate * -1
-            immediate = list(bin(immediate)[2:])
-            for k in range(len(immediate)):
-                if(immediate[k] == "0"):
-                    immediate[k] = "1"
-                else:
-                    immediate[k] = "0"
-            aux = len(immediate)
-            immediate = int(''.join(immediate),2) + 1 
-            immediate = bin(immediate)[2:]
-            immediate = immediate.zfill(aux)
-        elif immediate[0] == '0' and immediate[1] == 'x':
-            immediate = converter_oc_e_hex(immediate,h)
-        elif immediate[0] == '0' and immediate[1] == 'c':
-            immediate = converter_oc_e_hex(immediate,c) 
-        else:
-            immediate = int(immediate)
-            immediate = bin(immediate)[2:]    
-    else:
-        immediate = int(immediate)
-        immediate = bin(immediate)[2:]
-        
-    immediate = format(int(immediate, 2), '012b')
-    
-    opcode = '0000011'
-    func3 = '010'
-
-    resultado = ''
-
-    resultado = immediate + rs1 + func3 + rd + opcode
-    print(resultado)
-
-    resultado_hex = converter_oc_e_hex(resultado, 2)
-    resultado_octal = converter_oc_e_hex(resultado, 3)
-    criar.criarArquivo_bin(resultado, num, nome_arq)
-    criar.criarArquivo_hex(resultado_hex, num, nome_arq)
-    criar.criarArquivo_octal(resultado_octal, num, nome_arq)
-    return 
-
-def sw(linha, num, nome_arq):
-    c = 1
-    h = 0
-    opcode = '0100011'
-    funct3 = '010'
-    rs2 = linha[1]
-    rs2 = rs2.replace("x", "")
-    rs2 = bin(int(rs2))[2:]
-    rs2 = format(int(rs2, 2), '05b') #preenchendo rs2 para 5bits
-    rs1 = linha[3]
-    rs1 = rs1.replace("x", "")
-    rs1 = bin(int(rs1))[2:]
-    rs1 = format(int(rs1, 2), '05b') #preenchendo rs1 para 5bits
-    immediate = linha[2]
-    
-    x = len(immediate)
-    
-    #verificando se o immediate cabe em 12 bits
-    if(x > 1):
-        if immediate[0] == '0' and immediate[1] == 'x':
-            verificar = converter_oc_e_hex(immediate,h)
             verificar = int(verificar,2)
-        elif immediate[0] == '0' and immediate[1] == 'c':
-            verificar = converter_oc_e_hex(immediate,c)
-            verificar = int(verificar,2) 
+        elif immediate[0] == '0' and immediate[1] == 'b':
+            verificar = converter_oc_e_hex(immediate,b)
+            verificar = int(verificar,2)
+            print(verificar)
         else:
             verificar = int(immediate)
     else:
@@ -142,12 +75,95 @@ def sw(linha, num, nome_arq):
             immediate = converter_oc_e_hex(immediate,h)
         elif immediate[0] == '0' and immediate[1] == 'c':
             immediate = converter_oc_e_hex(immediate,c)
+        elif immediate[0] == '0' and immediate[1] == 'b':
+            immediate = converter_oc_e_hex(immediate,b) 
         else:
-            immediate = immediate.replace("x","")
             immediate = int(immediate)
-            immediate = bin(immediate)[2:]     
+            immediate = bin(immediate)[2:]    
     else:
-        immediate = immediate.replace("x","")
+        immediate = int(immediate)
+        immediate = bin(immediate)[2:]
+        
+    immediate = format(int(immediate, 2), '012b')
+    
+    opcode = '0000011'
+    func3 = '010'
+
+    resultado = ''
+
+    resultado = immediate + rs1 + func3 + rd + opcode
+    print(resultado)
+
+    resultado_hex = converter_oc_e_hex(resultado, 2)
+    resultado_octal = converter_oc_e_hex(resultado, 3)
+    criar.criarArquivo_bin(resultado, num, nome_arq)
+    criar.criarArquivo_hex(resultado_hex, num, nome_arq)
+    criar.criarArquivo_octal(resultado_octal, num, nome_arq)
+    return 
+
+#100% funcional
+def sw(linha, num, nome_arq):
+    c = 1
+    h = 0
+    b = 4
+    opcode = '0100011'
+    funct3 = '010'
+    rs2 = linha[1]
+    rs2 = rs2.replace("x", "")
+    rs2 = bin(int(rs2))[2:]
+    rs2 = format(int(rs2, 2), '05b') #preenchendo rs2 para 5bits
+    rs1 = linha[3]
+    rs1 = rs1.replace("x", "")
+    rs1 = bin(int(rs1))[2:]
+    rs1 = format(int(rs1, 2), '05b') #preenchendo rs1 para 5bits
+    immediate = linha[2]
+    
+    x = len(immediate)
+    
+    #verificando se o immediate cabe em 12 bits
+    if(x > 1):
+        if immediate[0] == '0' and immediate[1] == 'x':
+            verificar = converter_oc_e_hex(immediate,h)
+            verificar = int(verificar,2)
+        elif immediate[0] == '0' and immediate[1] == 'c':
+            verificar = converter_oc_e_hex(immediate,c)
+            verificar = int(verificar,2)
+        elif immediate[0] == '0' and immediate[1] == 'b':
+            verificar = converter_oc_e_hex(immediate,b)
+            verificar = int(verificar,2)
+            print(verificar)
+        else:
+            verificar = int(immediate)
+    else:
+            verificar = int(immediate)
+    if verificar > 2047 or verificar < -2048:
+        return print("Erro: Immediate não cabe em 12 bits")
+    
+    if(x > 1):
+        if immediate[0] =='-':
+            complemento_II = True
+            immediate = int(immediate)
+            immediate = immediate * -1
+            immediate = list(bin(immediate)[2:])
+            for k in range(len(immediate)):
+                if(immediate[k] == "0"):
+                    immediate[k] = "1"
+                else:
+                    immediate[k] = "0"
+            aux = len(immediate)
+            immediate = int(''.join(immediate),2) + 1 
+            immediate = bin(immediate)[2:]
+            immediate = immediate.zfill(aux)
+        elif immediate[0] == '0' and immediate[1] == 'x':
+            immediate = converter_oc_e_hex(immediate,h)
+        elif immediate[0] == '0' and immediate[1] == 'c':
+            immediate = converter_oc_e_hex(immediate,c)
+        elif immediate[0] == '0' and immediate[1] == 'b':
+            immediate = converter_oc_e_hex(immediate,b) 
+        else:
+            immediate = int(immediate)
+            immediate = bin(immediate)[2:]    
+    else:
         immediate = int(immediate)
         immediate = bin(immediate)[2:]
         
@@ -234,6 +250,7 @@ def xor(linha, num, nome_arq):
 def addi(linha, num, nome_arq):
     c = 1
     h = 0
+    b = 4
     opcode = '0010011' 
     func3 = '000'
     rd = linha[1]
@@ -261,7 +278,11 @@ def addi(linha, num, nome_arq):
             verificar = int(verificar,2)
         elif immediate[0] == '0' and immediate[1] == 'c':
             verificar = converter_oc_e_hex(immediate,c)
-            verificar = int(verificar,2) 
+            verificar = int(verificar,2)
+        elif immediate[0] == '0' and immediate[1] == 'b':
+            verificar = converter_oc_e_hex(immediate,b)
+            verificar = int(verificar,2)
+            print(verificar)
         else:
             verificar = int(immediate)
     else:
@@ -284,21 +305,18 @@ def addi(linha, num, nome_arq):
             immediate = int(''.join(immediate),2) + 1 
             immediate = bin(immediate)[2:]
             immediate = immediate.zfill(aux)
-            immediate = "{:1>{}}".format(immediate, 12)
         elif immediate[0] == '0' and immediate[1] == 'x':
             immediate = converter_oc_e_hex(immediate,h)
         elif immediate[0] == '0' and immediate[1] == 'c':
-            immediate = converter_oc_e_hex(immediate,c)  
+            immediate = converter_oc_e_hex(immediate,c)
+        elif immediate[0] == '0' and immediate[1] == 'b':
+            immediate = converter_oc_e_hex(immediate,b) 
         else:
-            immediate = immediate.replace("x","")
             immediate = int(immediate)
-            immediate = bin(immediate)[2:]
-            immediate = format(int(immediate, 2), '012b')   
+            immediate = bin(immediate)[2:]    
     else:
-        immediate = immediate.replace("x","")
         immediate = int(immediate)
         immediate = bin(immediate)[2:]
-        immediate = format(int(immediate, 2), '012b')
 
     rd = str(rd)
     rs1 = str(rs1)
@@ -441,6 +459,7 @@ def beq(linha, num, nome_arq):
 def jalr(linha, num, nome_arq):
     c = 1
     h = 0
+    b = 4
     complemento_II = False
     opcode = '1100111'
     funct3 = '000'
@@ -469,7 +488,11 @@ def jalr(linha, num, nome_arq):
             verificar = int(verificar,2)
         elif immediate[0] == '0' and immediate[1] == 'c':
             verificar = converter_oc_e_hex(immediate,c)
-            verificar = int(verificar,2) 
+            verificar = int(verificar,2)
+        elif immediate[0] == '0' and immediate[1] == 'b':
+            verificar = converter_oc_e_hex(immediate,b)
+            verificar = int(verificar,2)
+            print(verificar)
         else:
             verificar = int(immediate)
     else:
@@ -492,21 +515,18 @@ def jalr(linha, num, nome_arq):
             immediate = int(''.join(immediate),2) + 1 
             immediate = bin(immediate)[2:]
             immediate = immediate.zfill(aux)
-            immediate = "{:1>{}}".format(immediate, 12)
         elif immediate[0] == '0' and immediate[1] == 'x':
             immediate = converter_oc_e_hex(immediate,h)
         elif immediate[0] == '0' and immediate[1] == 'c':
-            immediate = converter_oc_e_hex(immediate,c)  
+            immediate = converter_oc_e_hex(immediate,c)
+        elif immediate[0] == '0' and immediate[1] == 'b':
+            immediate = converter_oc_e_hex(immediate,b) 
         else:
-            immediate = immediate.replace("x","")
             immediate = int(immediate)
-            immediate = bin(immediate)[2:]
-            immediate = format(int(immediate, 2), '012b')   
+            immediate = bin(immediate)[2:]    
     else:
-        immediate = immediate.replace("x","")
         immediate = int(immediate)
         immediate = bin(immediate)[2:]
-        immediate = format(int(immediate, 2), '012b')
 
     rd = str(rd)
     rs1 = str(rs1)
@@ -673,6 +693,7 @@ def noti(linha, num, nome_arq):
 def li(linha, num, nome_arq):
     c = 1
     h = 0
+    b = 4
     opcode = '0010011' 
     func3 = '000'
     rd = linha[1]
@@ -694,7 +715,11 @@ def li(linha, num, nome_arq):
             verificar = int(verificar,2)
         elif immediate[0] == '0' and immediate[1] == 'c':
             verificar = converter_oc_e_hex(immediate,c)
-            verificar = int(verificar,2) 
+            verificar = int(verificar,2)
+        elif immediate[0] == '0' and immediate[1] == 'b':
+            verificar = converter_oc_e_hex(immediate,b)
+            verificar = int(verificar,2)
+            print(verificar)
         else:
             verificar = int(immediate)
     else:
@@ -717,21 +742,18 @@ def li(linha, num, nome_arq):
             immediate = int(''.join(immediate),2) + 1 
             immediate = bin(immediate)[2:]
             immediate = immediate.zfill(aux)
-            immediate = "{:1>{}}".format(immediate, 12)
         elif immediate[0] == '0' and immediate[1] == 'x':
             immediate = converter_oc_e_hex(immediate,h)
         elif immediate[0] == '0' and immediate[1] == 'c':
-            immediate = converter_oc_e_hex(immediate,c)  
+            immediate = converter_oc_e_hex(immediate,c)
+        elif immediate[0] == '0' and immediate[1] == 'b':
+            immediate = converter_oc_e_hex(immediate,b) 
         else:
-            immediate = immediate.replace("x","")
             immediate = int(immediate)
-            immediate = bin(immediate)[2:]
-            immediate = format(int(immediate, 2), '012b')   
+            immediate = bin(immediate)[2:]    
     else:
-        immediate = immediate.replace("x","")
         immediate = int(immediate)
         immediate = bin(immediate)[2:]
-        immediate = format(int(immediate, 2), '012b')
 
     rd = str(rd)
     rs1 = str(rs1)
