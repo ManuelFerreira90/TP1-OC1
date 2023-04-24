@@ -1,6 +1,6 @@
 lw x7, 4(x10)
 addi x5, x2, -50
-sw x9, 0(x10)
+sw x9, 0c77(x10)
 sub x5, x6, x7
 srl x7, x7, x6
 xor x9, x10, x12

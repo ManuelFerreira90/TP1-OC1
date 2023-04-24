@@ -2,12 +2,10 @@ import functions.criar_arquivo as criar
 
 def converter_oc_e_hex(var, tipo):
     if tipo == 0:
-        var = var[2:]
-        f = bin(int(var, 16))[2:]
+        f = bin(int(var[2:], 16))[2:]
         return f
     elif tipo == 1:
-        var = var[2:]
-        f = bin(int(var, 8))[2:]
+        f = bin(int(var[2:], 8))[2:]
         return f
     elif tipo == 2: #Convertendo a instrucao de 32 bits de bin para hex
         f = hex(int(var, 2))[2:]
@@ -35,8 +33,21 @@ def lw(linha, num, nome_arq):
     rs1 = format(int(rs1, 2), '05b')
     
     immediate = str(immediate)
-    immediate = immediate.replace("x", "")
     x = len(immediate)
+    #verificando se o immediate cabe em 12 bits
+    if(x > 1):
+        if immediate[0] == '0' and immediate[1] == 'x':
+            verificar = converter_oc_e_hex(immediate,h)
+            verificar = int(verificar)
+        elif immediate[0] == '0' and immediate[1] == 'c':
+            verificar = converter_oc_e_hex(immediate,c)
+            verificar = int(verificar) 
+        else:
+            verificar = int(immediate)
+    else:
+            verificar = int(immediate)
+    if verificar > 2047 or verificar < -2048:
+        return print("Erro: Immediate não cabe em 12 bits")
     
     if(x > 1):
         if immediate[0] =='-':
@@ -56,9 +67,11 @@ def lw(linha, num, nome_arq):
         elif immediate[0] == '0' and immediate[1] == 'x':
             immediate = converter_oc_e_hex(immediate,h)
         elif immediate[0] == '0' and immediate[1] == 'c':
-            immediate = converter_oc_e_hex(immediate,c)     
+            immediate = converter_oc_e_hex(immediate,c) 
+        else:
+            immediate = int(immediate)
+            immediate = bin(immediate)[2:]    
     else:
-        immediate = immediate.replace("x","")
         immediate = int(immediate)
         immediate = bin(immediate)[2:]
         
@@ -79,8 +92,9 @@ def lw(linha, num, nome_arq):
     criar.criarArquivo_octal(resultado_octal, num, nome_arq)
     return 
 
-#falta immediate receber outras bases
 def sw(linha, num, nome_arq):
+    c = 1
+    h = 0
     opcode = '0100011'
     funct3 = '010'
     rs2 = linha[1]
@@ -91,28 +105,67 @@ def sw(linha, num, nome_arq):
     rs1 = rs1.replace("x", "")
     rs1 = bin(int(rs1))[2:]
     rs1 = format(int(rs1, 2), '05b') #preenchendo rs1 para 5bits
-    immediate = int(linha[2])
-    if (immediate <= 31):
-        immediate_4 = bin(immediate)[2:]
-        immediate_4 = format(int(immediate_4, 2), '05b')
-        immediate_11 = '0000000'
+    immediate = linha[2]
+    
+    x = len(immediate)
+    
+    #verificando se o immediate cabe em 12 bits
+    if(x > 1):
+        if immediate[0] == '0' and immediate[1] == 'x':
+            verificar = converter_oc_e_hex(immediate,h)
+            verificar = int(verificar,2)
+        elif immediate[0] == '0' and immediate[1] == 'c':
+            verificar = converter_oc_e_hex(immediate,c)
+            verificar = int(verificar,2) 
+        else:
+            verificar = int(immediate)
     else:
-        immediate_11 = ''
-        immediate_4 = ''
-        immediate = format(int(bin(immediate), 2), '012b') # immediate com um total de 12 bits
-        for i in range(12):
-            if(i < 7):
-                immediate_11 += immediate[i]
-            else:
-                immediate_4 += immediate[i]
-    resultado = immediate_11 + str(rs2) + str(rs1) + funct3 + immediate_4 + opcode
+            verificar = int(immediate)
+    print(verificar)
+    if verificar > 2047 or verificar < -2048:
+        return print("Erro: Immediate não cabe em 12 bits")
+    
+    if(x > 1):
+        if immediate[0] =='-':
+            complemento_II = True
+            immediate = int(immediate)
+            immediate = immediate * -1
+            immediate = list(bin(immediate)[2:])
+            for k in range(len(immediate)):
+                if(immediate[k] == "0"):
+                    immediate[k] = "1"
+                else:
+                    immediate[k] = "0"
+            aux = len(immediate)
+            immediate = int(''.join(immediate),2) + 1 
+            immediate = bin(immediate)[2:]
+            immediate = immediate.zfill(aux)
+        elif immediate[0] == '0' and immediate[1] == 'x':
+            immediate = converter_oc_e_hex(immediate,h)
+        elif immediate[0] == '0' and immediate[1] == 'c':
+            immediate = converter_oc_e_hex(immediate,c)
+        else:
+            immediate = immediate.replace("x","")
+            immediate = int(immediate)
+            immediate = bin(immediate)[2:]     
+    else:
+        immediate = immediate.replace("x","")
+        immediate = int(immediate)
+        immediate = bin(immediate)[2:]
+        
+    immediate = format(int(immediate, 2), '012b')
+    
+    immediate1 = immediate[0:7]
+    immediate2 = immediate[7:12]
+    
+    resultado = immediate1 + str(rs2) + str(rs1) + funct3 + immediate2 + opcode
     print(resultado)
 
-    resultado_hex = converter_oc_e_hex(resultado, 2)
-    resultado_octal = converter_oc_e_hex(resultado, 3)
-    criar.criarArquivo_bin(resultado, num, nome_arq)
-    criar.criarArquivo_hex(resultado_hex, num, nome_arq)
-    criar.criarArquivo_octal(resultado_octal, num, nome_arq)
+    # resultado_hex = converter_oc_e_hex(resultado, 2)
+    # resultado_octal = converter_oc_e_hex(resultado, 3)
+    # criar.criarArquivo_bin(resultado, num, nome_arq)
+    # criar.criarArquivo_hex(resultado_hex, num, nome_arq)
+    # criar.criarArquivo_octal(resultado_octal, num, nome_arq)
     return
 
 #100% funcional
@@ -202,6 +255,21 @@ def addi(linha, num, nome_arq):
     complemento_II = False
     
     x = len(immediate)
+    
+    #verificando se o immediate cabe em 12 bits
+    if(x > 1):
+        if immediate[0] == '0' and immediate[1] == 'x':
+            verificar = converter_oc_e_hex(immediate,h)
+            verificar = int(verificar)
+        elif immediate[0] == '0' and immediate[1] == 'c':
+            verificar = converter_oc_e_hex(immediate,c)
+            verificar = int(verificar) 
+        else:
+            verificar = int(immediate)
+    else:
+            verificar = int(immediate)
+    if verificar > 2047 or verificar < -2048:
+        return print("Erro: Immediate não cabe em 12 bits")
     
     if(x > 1):
         if immediate[0] =='-':
@@ -343,6 +411,21 @@ def jalr(linha, num, nome_arq):
     complemento_II = False
     
     x = len(immediate)
+    
+    #verificando se o immediate cabe em 12 bits
+    if(x > 1):
+        if immediate[0] == '0' and immediate[1] == 'x':
+            verificar = converter_oc_e_hex(immediate,h)
+            verificar = int(verificar)
+        elif immediate[0] == '0' and immediate[1] == 'c':
+            verificar = converter_oc_e_hex(immediate,c)
+            verificar = int(verificar) 
+        else:
+            verificar = int(immediate)
+    else:
+            verificar = int(immediate)
+    if verificar > 2047 or verificar < -2048:
+        return print("Erro: Immediate não cabe em 12 bits")
     
     if(x > 1):
         if immediate[0] =='-':
@@ -554,6 +637,20 @@ def li(linha, num, nome_arq):
     complemento_II = False
     
     x = len(immediate)
+    #verificando se o immediate cabe em 12 bits
+    if(x > 1):
+        if immediate[0] == '0' and immediate[1] == 'x':
+            verificar = converter_oc_e_hex(immediate,h)
+            verificar = int(verificar)
+        elif immediate[0] == '0' and immediate[1] == 'c':
+            verificar = converter_oc_e_hex(immediate,c)
+            verificar = int(verificar) 
+        else:
+            verificar = int(immediate)
+    else:
+            verificar = int(immediate)
+    if verificar > 2047 or verificar < -2048:
+        return print("Erro: Immediate não cabe em 12 bits")
     
     if(x > 1):
         if immediate[0] =='-':
