@@ -57,25 +57,25 @@ def converter_immediate(immediate, x, h, c, b):
             return immediate
         elif immediate[0] == '0' and immediate[1] == 'x':
             immediate = converter_oc_e_hex(immediate,h)
-            format(int(immediate, 2), '012b')
+            immediate = format(int(immediate, 2), '012b')
             return immediate
         elif immediate[0] == '0' and immediate[1] == 'c':
             immediate = converter_oc_e_hex(immediate,c)
-            format(int(immediate, 2), '012b')
+            immediate = format(int(immediate, 2), '012b')
             return immediate
         elif immediate[0] == '0' and immediate[1] == 'b':
             immediate = converter_oc_e_hex(immediate,b)
-            format(int(immediate, 2), '012b')
+            immediate = format(int(immediate, 2), '012b')
             return immediate
         else:
             immediate = int(immediate)
             immediate = bin(immediate)[2:]
-            format(int(immediate, 2), '012b')
+            immediate = format(int(immediate, 2), '012b')
             return immediate   
     else:
         immediate = int(immediate)
         immediate = bin(immediate)[2:]
-        format(int(immediate, 2), '012b')
+        immediate = format(int(immediate, 2), '012b')
         return immediate
 
 #100% funcional
