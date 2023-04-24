@@ -32,16 +32,15 @@ def lw(linha, num, nome_arq):
     rs1 = bin(int(rs1))[2:]
     rs1 = format(int(rs1, 2), '05b')
     
-    immediate = str(immediate)
     x = len(immediate)
     #verificando se o immediate cabe em 12 bits
     if(x > 1):
         if immediate[0] == '0' and immediate[1] == 'x':
             verificar = converter_oc_e_hex(immediate,h)
-            verificar = int(verificar)
+            verificar = int(verificar,2)
         elif immediate[0] == '0' and immediate[1] == 'c':
             verificar = converter_oc_e_hex(immediate,c)
-            verificar = int(verificar) 
+            verificar = int(verificar,2) 
         else:
             verificar = int(immediate)
     else:
@@ -121,7 +120,6 @@ def sw(linha, num, nome_arq):
             verificar = int(immediate)
     else:
             verificar = int(immediate)
-    print(verificar)
     if verificar > 2047 or verificar < -2048:
         return print("Erro: Immediate não cabe em 12 bits")
     
@@ -260,10 +258,10 @@ def addi(linha, num, nome_arq):
     if(x > 1):
         if immediate[0] == '0' and immediate[1] == 'x':
             verificar = converter_oc_e_hex(immediate,h)
-            verificar = int(verificar)
+            verificar = int(verificar,2)
         elif immediate[0] == '0' and immediate[1] == 'c':
             verificar = converter_oc_e_hex(immediate,c)
-            verificar = int(verificar) 
+            verificar = int(verificar,2) 
         else:
             verificar = int(immediate)
     else:
@@ -468,10 +466,10 @@ def jalr(linha, num, nome_arq):
     if(x > 1):
         if immediate[0] == '0' and immediate[1] == 'x':
             verificar = converter_oc_e_hex(immediate,h)
-            verificar = int(verificar)
+            verificar = int(verificar,2)
         elif immediate[0] == '0' and immediate[1] == 'c':
             verificar = converter_oc_e_hex(immediate,c)
-            verificar = int(verificar) 
+            verificar = int(verificar,2) 
         else:
             verificar = int(immediate)
     else:
@@ -693,10 +691,10 @@ def li(linha, num, nome_arq):
     if(x > 1):
         if immediate[0] == '0' and immediate[1] == 'x':
             verificar = converter_oc_e_hex(immediate,h)
-            verificar = int(verificar)
+            verificar = int(verificar,2)
         elif immediate[0] == '0' and immediate[1] == 'c':
             verificar = converter_oc_e_hex(immediate,c)
-            verificar = int(verificar) 
+            verificar = int(verificar,2) 
         else:
             verificar = int(immediate)
     else:
