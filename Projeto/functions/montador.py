@@ -5,10 +5,17 @@ def converter_oc_e_hex(var, tipo):
         var = var[2:]
         f = bin(int(var, 16))[2:]
         return f
-    else:
+    elif tipo == 1:
         var = var[2:]
         f = bin(int(var, 8))[2:]
         return f
+    elif tipo == 2: #Convertendo a instrucao de 32 bits em bin para hex
+        f = hex(int(var, 2))[2:]
+        return f
+    elif tipo == 3: #Convertendo a instrucao de 32 bits em bin para octal
+        f = oct(int(var, 2))[2:]
+        return f
+
 
 #falta immediate receber maior 32 bits
 def lw(linha, num, nome_arq):
@@ -97,7 +104,12 @@ def lw(linha, num, nome_arq):
 
     resultado = immediate_aux + rs1_aux + func3 + rd_aux + opcode
     print(resultado)
-    criar.criarArquivo(resultado, num, nome_arq)
+
+    resultado_hex = converter_oc_e_hex(resultado, 2)
+    resultado_octal = converter_oc_e_hex(resultado, 3)
+    criar.criarArquivo_bin(resultado, num, nome_arq)
+    criar.criarArquivo_hex(resultado_hex, num, nome_arq)
+    criar.criarArquivo_octal(resultado_octal, num, nome_arq)
     return 
 
 #falta immediate receber outras bases
@@ -127,7 +139,9 @@ def sw(linha, num, nome_arq):
             else:
                 immediate_4 += immediate[i]
     instrucao = immediate_11 + str(rs2) + str(rs1) + funct3 + immediate_4 + opcode
-    criar.criarArquivo(instrucao, num, nome_arq)
+    criar.criarArquivo_bin(instrucao, num, nome_arq)
+    criar.criarArquivo_hex(instrucao, num, nome_arq)
+    criar.criarArquivo_octal(instrucao, num, nome_arq)
     print(instrucao)
     return
 
@@ -207,7 +221,12 @@ def sub(linha, num, nome_arq):
     rs1_aux = ''.join(rs1_aux)
     resultado = funct7 + rs2_aux + rs1_aux + funct3 + rd_aux + opcode
     print(resultado)
-    criar.criarArquivo(resultado, num, nome_arq)
+        
+    resultado_hex = converter_oc_e_hex(resultado, 2)
+    resultado_octal = converter_oc_e_hex(resultado, 3)
+    criar.criarArquivo_bin(resultado, num, nome_arq)
+    criar.criarArquivo_hex(resultado_hex, num, nome_arq)
+    criar.criarArquivo_octal(resultado_octal, num, nome_arq)
     return 
 
 def xor(linha, num, nome_arq): 
@@ -227,9 +246,14 @@ def xor(linha, num, nome_arq):
     rs2 = str(rs2).replace("x", "")
     rs2 = bin(int(rs2))[2:]
     rs2 = format(int(rs2, 2), '05b')
-    instrucao = funct7 + str(rs2) + str(rs1) + funct3 + rd + opcode
-    criar.criarArquivo(instrucao, num, nome_arq)
-    print(instrucao)
+    resultado = funct7 + str(rs2) + str(rs1) + funct3 + rd + opcode
+    print(resultado)
+        
+    resultado_hex = converter_oc_e_hex(resultado, 2)
+    resultado_octal = converter_oc_e_hex(resultado, 3)
+    criar.criarArquivo_bin(resultado, num, nome_arq)
+    criar.criarArquivo_hex(resultado_hex, num, nome_arq)
+    criar.criarArquivo_octal(resultado_octal, num, nome_arq)
     return 
 
 #falta immediate recerber mais que 32 bits
@@ -324,7 +348,12 @@ def addi(linha, num, nome_arq):
     
     resultado = immediate_aux + rs1_aux + func3 + rd_aux + opcode
     print(resultado)
-    criar.criarArquivo(resultado, num, nome_arq)
+
+    resultado_hex = converter_oc_e_hex(resultado, 2)
+    resultado_octal = converter_oc_e_hex(resultado, 3)
+    criar.criarArquivo_bin(resultado, num, nome_arq)
+    criar.criarArquivo_hex(resultado_hex, num, nome_arq)
+    criar.criarArquivo_octal(resultado_octal, num, nome_arq)
     return 
 
 def srl(linha, num, nome_arq): 
@@ -403,7 +432,12 @@ def srl(linha, num, nome_arq):
     rs1_aux = ''.join(rs1_aux)
     resultado = funct7 + rs2_aux + rs1_aux + funct3 + rd_aux + opcode
     print(resultado)
-    criar.criarArquivo(resultado, num, nome_arq)
+
+    resultado_hex = converter_oc_e_hex(resultado, 2)
+    resultado_octal = converter_oc_e_hex(resultado, 3)
+    criar.criarArquivo_bin(resultado, num, nome_arq)
+    criar.criarArquivo_hex(resultado_hex, num, nome_arq)
+    criar.criarArquivo_octal(resultado_octal, num, nome_arq)
     return 
 
 #falta immediate receber outras bases
@@ -432,9 +466,14 @@ def beq(linha, num, nome_arq):
             imm10_5 += immediate[i]
         elif(i > 6 and i < 11):
             imm4_1 += immediate[i]
-    instrucao = immediate[11] + imm10_5 + str(rs2) + str(rs1) + funct3 + imm4_1 + immediate[10] + opcode
-    criar.criarArquivo(instrucao, num, nome_arq)
-    print(instrucao)
+    resultado = immediate[11] + imm10_5 + str(rs2) + str(rs1) + funct3 + imm4_1 + immediate[10] + opcode
+    print(resultado)
+
+    resultado_hex = converter_oc_e_hex(resultado, 2)
+    resultado_octal = converter_oc_e_hex(resultado, 3)
+    criar.criarArquivo_bin(resultado, num, nome_arq)
+    criar.criarArquivo_hex(resultado_hex, num, nome_arq)
+    criar.criarArquivo_octal(resultado_octal, num, nome_arq)
     return
 
 #falta immediate receber mais que 32 bits
@@ -518,7 +557,12 @@ def jalr(linha, num, nome_arq):
     
     resultado = [immediate_aux] + [rs1_aux] + [funct3] + [rd_aux] + [opcode]
     print(resultado)
-    #criar.criarArquivo(resultado, num, nome_arq)
+        
+    # resultado_hex = converter_oc_e_hex(resultado, 2)
+    # resultado_octal = converter_oc_e_hex(resultado, 3)
+    # criar.criarArquivo_bin(resultado, num, nome_arq)
+    # criar.criarArquivo_hex(resultado_hex, num, nome_arq)
+    # criar.criarArquivo_octal(resultado_octal, num, nome_arq)
     return
 
 #compressed function 16bits
@@ -565,7 +609,12 @@ def c_mv(linha, num, nome_arq):
     
     resultado = [funct4] + [rs1] + [rd_aux] + [rs2_aux] + [opcode]
     print(resultado)
-    #criar.criarArquivo(resultado, num, nome_arq)
+        
+    # resultado_hex = converter_oc_e_hex(resultado, 2)
+    # resultado_octal = converter_oc_e_hex(resultado, 3)
+    # criar.criarArquivo_bin(resultado, num, nome_arq)
+    # criar.criarArquivo_hex(resultado_hex, num, nome_arq)
+    # criar.criarArquivo_octal(resultado_octal, num, nome_arq)
     return
 
 #compressed function 16bits
@@ -596,7 +645,12 @@ def c_jr(linha, num, nome_arq):
 
     resultado = [funct3] + [rd] + [rs1_aux] + [immediate] + [opcode]
     print(resultado)
-    #criar.criarArquivo(resultado, num, nome_arq)
+        
+    # resultado_hex = converter_oc_e_hex(resultado, 2)
+    # resultado_octal = converter_oc_e_hex(resultado, 3)
+    # criar.criarArquivo_bin(resultado, num, nome_arq)
+    # criar.criarArquivo_hex(resultado_hex, num, nome_arq)
+    # criar.criarArquivo_octal(resultado_octal, num, nome_arq)
     return
     
 #compressed function 16bits
@@ -676,7 +730,12 @@ def c_li(linha, num, nome_arq):
 
     resultado = [funct3] + [immediate_aux] + [rd_aux] + [immediate2] + [opcode]
     print(resultado)
-    #criar.criarArquivo(resultado, num, nome_arq)
+        
+    # resultado_hex = converter_oc_e_hex(resultado, 2)
+    # resultado_octal = converter_oc_e_hex(resultado, 3)
+    # criar.criarArquivo_bin(resultado, num, nome_arq)
+    # criar.criarArquivo_hex(resultado_hex, num, nome_arq)
+    # criar.criarArquivo_octal(resultado_octal, num, nome_arq)
     return 
     
 def indentificar_funcao(x, num, arq):
