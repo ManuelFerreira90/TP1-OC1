@@ -367,17 +367,69 @@ def beq(linha, num, nome_arq):
     rs2 = format(int(rs2, 2), '05b') #preenchendo rs2 para 5bits
 
     immediate = linha[3]
-    immediate = str(immediate)
-    immediate = bin(int(immediate))[2:]
-    immediate = format(int(immediate, 2), '012b')
+    complemento_II = False
+    x = len(immediate)
+    c = 1
+    h = 0
+    
+    if(x > 1):
+        if immediate[0] =='-':
+            complemento_II = True
+            immediate = int(immediate)
+            immediate = immediate * -1
+            if(immediate > 2048):
+                print("ERRO: out of range")
+                return
+            immediate = list(bin(immediate)[2:])
+            for k in range(len(immediate)):
+                if(immediate[k] == "0"):
+                    immediate[k] = "1"
+                else:
+                    immediate[k] = "0"
+            aux = len(immediate)
+            immediate = int(''.join(immediate),2) + 1 
+            immediate = bin(immediate)[2:]
+            immediate = immediate.zfill(aux)
+            immediate = "{:1>{}}".format(immediate, 12)
+        elif immediate[0] == '0' and immediate[1] == 'x':
+            immediate = converter_oc_e_hex(immediate, h)
+            if(int(immediate) < -2048 or int(immediate) > 2047):
+                print("ERRO: out of range")
+                return
+        elif immediate[0] == '0' and immediate[1] == 'c':
+            immediate = converter_oc_e_hex(immediate, c)
+            print(int(immediate, 10))
+            if(int(immediate, 10) < -2048 or int(immediate) > 2047):
+                print("ERRO: out of range")
+                return  
+        else:
+            immediate = immediate.replace("x","")
+            immediate = int(immediate)
+            if(immediate > 2047):
+                print("ERRO: out of range")
+                return
+            immediate = bin(immediate)[2:]
+            immediate = format(int(immediate, 2), '012b')   
+    else:
+        immediate = immediate.replace("x","")
+        immediate = int(immediate)
+        if(immediate > 2047):
+            print("ERRO: out of range")
+            return
+        immediate = bin(immediate)[2:]
+        immediate = format(int(immediate, 2), '012b')
+
     imm10_5 = ''
     imm4_1 = ''
-    for i in range(12):
+    for i in range(len(immediate)):
         if(i > 0 and i < 7):
             imm10_5 += immediate[i]
         elif(i > 6 and i < 11):
             imm4_1 += immediate[i]
-    resultado = immediate[11] + imm10_5 + str(rs2) + str(rs1) + funct3 + imm4_1 + immediate[10] + opcode
+
+    # resultado = immediate[0] + " - " + imm10_5 + " - " + str(rs2) + " - " + str(rs1) + " - " + funct3 + " - " + imm4_1 + " - " + immediate[1] + " - " + opcode
+
+    resultado = immediate[0] + imm10_5 + str(rs2) + str(rs1) + funct3 + imm4_1 + immediate[1] + opcode
     print(resultado)
 
     resultado_hex = converter_oc_e_hex(resultado, 2)
