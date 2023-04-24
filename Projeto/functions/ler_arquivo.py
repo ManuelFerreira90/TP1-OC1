@@ -9,11 +9,9 @@ def lerArquivo(arquivo):
             #variavel para armzenar cada linha do comando em assembly
             x = ''
             for linha in texto :
+                linha = linha.replace("\n","") #removendo "\n"
                 print(linha)
-                #removendo vírgulas
-                linha = linha.replace(",","")
-                #removendo "\n"
-                linha = linha.replace("\n","")
+                linha = linha.replace(",","") #removendo vírgulas
                 #armazendo cada comando em uma posição do vetor
                 #x = linha.split(" ")
                 #identificando cada instrução

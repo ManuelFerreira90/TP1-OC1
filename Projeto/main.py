@@ -14,8 +14,12 @@ while(num != 9):
     if num == 1:
         pasta = "./Projeto/Arquivos_teste/"
         files = os.listdir(pasta) 
-        print("Arquivos de teste: \n", files)
-        num = int(input("\nDigite a posicao do arquivo que deseja: "))       
+        tam = len(files)
+        print("ARQUIVOS: \n")
+        for i in range(tam):
+            print("|", i, "- ", files[i], end='  ')
+        print("|")
+        num = int(input("\n\nQual arquivo deseja utilizar no montador: "))       
         arquivo = files[num]
         func.lerArquivo(arquivo)
 
