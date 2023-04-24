@@ -1,14 +1,14 @@
-lw x7, 0b1010(x10)
+lw x7, 0b100000000001(x10)
 addi x5, x2, -50
-sw x9, 77(x10)
+sw x9, 0x801(x10)
 sub x5, x6, x7
 srl x7, x7, x6
 xor x9, x10, x12
 beq x10, x9, 100
-jalr x5, x1, 6
+jalr x5, x1, -100
 mv x5, x2
 not x6, x6
-li x5, 10
+li x5, 0c4001
 nop
 j loop
 ret 
