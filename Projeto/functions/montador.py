@@ -9,10 +9,10 @@ def converter_oc_e_hex(var, tipo):
         var = var[2:]
         f = bin(int(var, 8))[2:]
         return f
-    elif tipo == 2: #Convertendo a instrucao de 32 bits em bin para hex
+    elif tipo == 2: #Convertendo a instrucao de 32 bits de bin para hex
         f = hex(int(var, 2))[2:]
         return f
-    elif tipo == 3: #Convertendo a instrucao de 32 bits em bin para octal
+    elif tipo == 3: #Convertendo a instrucao de 32 bits de bin para octal
         f = oct(int(var, 2))[2:]
         return f
 
@@ -138,11 +138,14 @@ def sw(linha, num, nome_arq):
                 immediate_11 += immediate[i]
             else:
                 immediate_4 += immediate[i]
-    instrucao = immediate_11 + str(rs2) + str(rs1) + funct3 + immediate_4 + opcode
-    criar.criarArquivo_bin(instrucao, num, nome_arq)
-    criar.criarArquivo_hex(instrucao, num, nome_arq)
-    criar.criarArquivo_octal(instrucao, num, nome_arq)
-    print(instrucao)
+    resultado = immediate_11 + str(rs2) + str(rs1) + funct3 + immediate_4 + opcode
+    print(resultado)
+
+    resultado_hex = converter_oc_e_hex(resultado, 2)
+    resultado_octal = converter_oc_e_hex(resultado, 3)
+    criar.criarArquivo_bin(resultado, num, nome_arq)
+    criar.criarArquivo_hex(resultado_hex, num, nome_arq)
+    criar.criarArquivo_octal(resultado_octal, num, nome_arq)
     return
 
 def sub(linha, num, nome_arq):

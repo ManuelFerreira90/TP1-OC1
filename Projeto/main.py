@@ -16,7 +16,7 @@ while(num != 9):
         pasta = "./Projeto/Arquivos_teste/"
         files = os.listdir(pasta) 
         print("Arquivos de teste: \n", files)
-        num = int(input("\nDigite qual arquivo teste deseja: "))       
+        num = int(input("\nDigite a posicao do arquivo que deseja: "))       
         arquivo = files[num]
         func.lerArquivo(arquivo)
 
