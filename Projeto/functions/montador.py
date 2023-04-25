@@ -53,6 +53,7 @@ def converter_immediate(immediate, x, h, c, b):
             immediate = int(''.join(immediate),2) + 1 
             immediate = bin(immediate)[2:]
             immediate = immediate.zfill(aux)
+            #print(immediate)
             immediate = "{:1>{}}".format(immediate, 12)
             return immediate
         elif immediate[0] == '0' and immediate[1] == 'x':
@@ -695,17 +696,49 @@ def j(linha, num, nome_arq):
         print("ERRO: immediate maior que 12 bits!")
         return
     
-    #converter immediate
-    immediate = converter_immediate(immediate, x, h, c, b)
-    immediate = "{:1>{}}".format(immediate, 20)
+    if(x > 1):
+        if immediate[0] == '-':
+            complemento_II = True
+            immediate = int(immediate)
+            immediate = immediate * -1
+            immediate = list(bin(immediate)[2:])
+            for k in range(len(immediate)):
+                if(immediate[k] == "0"):
+                    immediate[k] = "1"
+                else:
+                    immediate[k] = "0"
+            aux = len(immediate)
+            immediate = int(''.join(immediate),2) + 1 
+            immediate = bin(immediate)[2:]
+            immediate = immediate.zfill(aux)
+            #print(immediate)
+            immediate = "{:1>{}}".format(immediate, 20)
+        elif immediate[0] == '0' and immediate[1] == 'x':
+            immediate = converter_oc_e_hex(immediate,h)
+            immediate = format(int(immediate, 2), '020b')
+        elif immediate[0] == '0' and immediate[1] == 'c':
+            immediate = converter_oc_e_hex(immediate,c)
+            immediate = format(int(immediate, 2), '020b')
+        elif immediate[0] == '0' and immediate[1] == 'b':
+            immediate = converter_oc_e_hex(immediate,b)
+            immediate = format(int(immediate, 2), '020b')
+        else:
+            immediate = int(immediate)
+            immediate = bin(immediate)[2:]
+            immediate = format(int(immediate, 2), '020b')   
+    else:
+        immediate = int(immediate)
+        immediate = bin(immediate)[2:]
+        immediate = format(int(immediate, 2), '020b')
 
+    print(immediate) 
     resultado = immediate + rd + opcode
-    
-    resultado_hex = converter_oc_e_hex(resultado, 2)
-    resultado_octal = converter_oc_e_hex(resultado, 3)
-    criar.criarArquivo_bin(resultado, num, nome_arq)
-    criar.criarArquivo_hex(resultado_hex, num, nome_arq)
-    criar.criarArquivo_octal(resultado_octal, num, nome_arq)
+    print(resultado)
+    # resultado_hex = converter_oc_e_hex(resultado, 2)
+    # resultado_octal = converter_oc_e_hex(resultado, 3)
+    # criar.criarArquivo_bin(resultado, num, nome_arq)
+    # criar.criarArquivo_hex(resultado_hex, num, nome_arq)
+    # criar.criarArquivo_octal(resultado_octal, num, nome_arq)
     return
 
 #100% funcional
