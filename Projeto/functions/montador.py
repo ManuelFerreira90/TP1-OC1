@@ -347,14 +347,14 @@ def beq(linha, num, nome_arq):
 
     # resultado = immediate[0] + " - " + imm10_5 + " - " + str(rs2) + " - " + str(rs1) + " - " + funct3 + " - " + imm4_1 + " - " + immediate[1] + " - " + opcode
 
-    resultado = immediate[0] + imm10_5 + str(rs2) + str(rs1) + funct3 + imm4_1 + immediate[1] + opcode
-    print(resultado)
+    #resultado = immediate[0] + imm10_5 + str(rs2) + str(rs1) + funct3 + imm4_1 + immediate[1] + opcode
+    # print(resultado)
 
-    resultado_hex = converter_oc_e_hex(resultado, 2)
-    resultado_octal = converter_oc_e_hex(resultado, 3)
-    criar.criarArquivo_bin(resultado, num, nome_arq)
-    criar.criarArquivo_hex(resultado_hex, num, nome_arq)
-    criar.criarArquivo_octal(resultado_octal, num, nome_arq)
+    # resultado_hex = converter_oc_e_hex(resultado, 2)
+    # resultado_octal = converter_oc_e_hex(resultado, 3)
+    # criar.criarArquivo_bin(resultado, num, nome_arq)
+    # criar.criarArquivo_hex(resultado_hex, num, nome_arq)
+    # criar.criarArquivo_octal(resultado_octal, num, nome_arq)
     return
 
 #100% funcional
