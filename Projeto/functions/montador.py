@@ -113,7 +113,6 @@ def lw(linha, num, nome_arq):
     resultado = ''
 
     resultado = immediate + rs1 + func3 + rd + opcode
-    print(resultado)
 
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -155,7 +154,6 @@ def sw(linha, num, nome_arq):
     immediate2 = immediate[7:12]
     
     resultado = immediate1 + str(rs2) + str(rs1) + funct3 + immediate2 + opcode
-    print(resultado)
 
     # resultado_hex = converter_oc_e_hex(resultado, 2)
     # resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -191,7 +189,6 @@ def sub(linha, num, nome_arq):
      
     
     resultado = funct7 + rs2 + rs1 + funct3 + rd + opcode
-    print(resultado)
         
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -219,7 +216,6 @@ def xor(linha, num, nome_arq):
     rs2 = bin(int(rs2))[2:]
     rs2 = format(int(rs2, 2), '05b')
     resultado = funct7 + str(rs2) + str(rs1) + funct3 + rd + opcode
-    print(resultado)
         
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -269,7 +265,6 @@ def addi(linha, num, nome_arq):
     resultado = ''
     
     resultado = immediate + rs1 + func3 + rd + opcode
-    print(resultado)
 
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -303,7 +298,6 @@ def srl(linha, num, nome_arq):
     rs2 = format(int(rs2, 2), '05b')
     
     resultado = funct7 + rs2 + rs1 + funct3 + rd + opcode
-    print(resultado)
 
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -332,66 +326,17 @@ def beq(linha, num, nome_arq):
     x = len(immediate)
     c = 1
     h = 0
+    b = 4
+
+    verificar = verificar_immediate(immediate, x, h, c, b)
+    if(verificar == 0):
+        print("ERRO: immediate maior que 12 bits!")
+        return
     
-    if(x > 1):
-        if immediate[0] =='-':
-            complemento_II = True
-            immediate = int(immediate)
-            immediate = immediate * -1
-            if(immediate > 2048):
-                print("ERRO: out of range")
-                return
-            immediate = list(bin(immediate)[2:])
-            for k in range(len(immediate)):
-                if(immediate[k] == "0"):
-                    immediate[k] = "1"
-                else:
-                    immediate[k] = "0"
-            aux = len(immediate)
-            immediate = int(''.join(immediate),2) + 1 
-            immediate = bin(immediate)[2:]
-            immediate = immediate.zfill(aux)
-            immediate = "{:1>{}}".format(immediate, 12)
-        elif immediate[0] == '0' and immediate[1] == 'x':
-            immediate = converter_oc_e_hex(immediate, h)
-            if(int(immediate, 2) < -2048 or int(immediate, 2) > 2047):
-                print("ERRO: out of range")
-                return 
-        elif immediate[0] == '0' and immediate[1] == 'c':
-            immediate = converter_oc_e_hex(immediate, c)
-            if(int(immediate, 2) < -2048 or int(immediate, 2) > 2047):
-                print("ERRO: out of range")
-                return 
-        else:
-            immediate = immediate.replace("x","")
-            immediate = int(immediate)
-            if(immediate > 2047):
-                print("ERRO: out of range")
-                return
-            immediate = bin(immediate)[2:]
-            immediate = format(int(immediate, 2), '012b')   
-    else:
-        immediate = immediate.replace("x","")
-        immediate = int(immediate)
-        if(immediate > 2047):
-            print("ERRO: out of range")
-            return
-        immediate = bin(immediate)[2:]
-        immediate = format(int(immediate, 2), '012b')
-
-    imm10_5 = ''
-    imm4_1 = ''
-    for i in range(len(immediate)):
-        if(i > 0 and i < 7):
-            imm10_5 += immediate[i]
-        elif(i > 6 and i < 11):
-            imm4_1 += immediate[i]
-
-    # resultado = immediate[0] + " - " + imm10_5 + " - " + str(rs2) + " - " + str(rs1) + " - " + funct3 + " - " + imm4_1 + " - " + immediate[1] + " - " + opcode
-
-    resultado = immediate[0] + imm10_5 + str(rs2) + str(rs1) + funct3 + imm4_1 + immediate[1] + opcode
-    print(resultado)
-
+    immediate = converter_immediate(immediate, x, h, c, b)
+    imm10_5 = immediate[1:7]
+    imm4_1 = immediate[7:11]
+    resultado = immediate[11] + imm10_5 + str(rs2) + str(rs1) + funct3 + imm4_1 + immediate[0] + opcode
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
     criar.criarArquivo_bin(resultado, num, nome_arq)
@@ -438,7 +383,6 @@ def jalr(linha, num, nome_arq):
     resultado = ''
     
     resultado = immediate + rs1 + funct3 + rd + opcode
-    print(resultado)
         
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -473,7 +417,6 @@ def mv(linha, num, nome_arq):
     resultado = ''
     
     resultado = immediate + rs1 + func3 + rd + opcode
-    print(resultado)
 
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -525,7 +468,7 @@ def mv(linha, num, nome_arq):
     # resultado = ''
     
     # resultado = [funct4] + [rs1] + [rd_aux] + [rs2_aux] + [opcode]
-    # print(resultado)
+    
         
     # resultado_hex = converter_oc_e_hex(resultado, 2)
     # resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -549,7 +492,6 @@ def noti(linha, num, nome_arq):
     rs1 = format(int(rs1, 2), '05b')
 
     resultado = immediate + str(rs1) + funct3 + rd + opcode
-    print(resultado)
         
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -584,7 +526,7 @@ def noti(linha, num, nome_arq):
     # resultado = ''
 
     # resultado = [funct3] + [rd] + [rs1_aux] + [immediate] + [opcode]
-    # print(resultado)
+    
         
     # resultado_hex = converter_oc_e_hex(resultado, 2)
     # resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -623,7 +565,6 @@ def li(linha, num, nome_arq):
     resultado = ''
     
     resultado = immediate + rs1 + func3 + rd + opcode
-    print(resultado)
 
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -705,7 +646,7 @@ def li(linha, num, nome_arq):
 
 
     # resultado = [funct3] + [immediate_aux] + [rd_aux] + [immediate2] + [opcode]
-    # print(resultado)
+    
         
     # resultado_hex = converter_oc_e_hex(resultado, 2)
     # resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -724,7 +665,6 @@ def nop(linha, num, nome_arq):
     resultado = ''
     
     resultado = immediate + rs1 + funct3 + rd + opcode
-    print(resultado)
     
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -741,7 +681,6 @@ def j(linha, num, nome_arq):
     resultado = ''
     
     resultado = immediate + rd + opcode
-    print(resultado)
     
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -760,7 +699,6 @@ def ret(linha, num, nome_arq):
     resultado = ''
     
     resultado = immediate + rs1 + funct3 + rd + opcode
-    print(resultado)
     
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -792,7 +730,6 @@ def neg(linha, num, nome_arq):
     resultado = ''
     
     resultado = funct7 + rs2 + rs1 + funct3 + rd + opcode
-    print(resultado)
     
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
