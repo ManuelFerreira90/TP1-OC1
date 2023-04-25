@@ -18,27 +18,24 @@ def converter_oc_e_hex(var, tipo):
         return f
 
 def verificar_immediate(immediate, x, h, c, b):
-    try:
-        if(x > 1):
-            if immediate[0] == '0' and immediate[1] == 'x':
-                verificar = converter_oc_e_hex(immediate,h)
-                verificar = int(verificar,2)
-            elif immediate[0] == '0' and immediate[1] == 'c':
-                verificar = converter_oc_e_hex(immediate,c)
-                verificar = int(verificar,2)
-            elif immediate[0] == '0' and immediate[1] == 'b':
-                verificar = converter_oc_e_hex(immediate,b)
-                verificar = int(verificar,2)
-            else:
-                verificar = int(immediate)
+    if(x > 1):
+        if immediate[0] == '0' and immediate[1] == 'x':
+            verificar = converter_oc_e_hex(immediate,h)
+            verificar = int(verificar,2)
+        elif immediate[0] == '0' and immediate[1] == 'c':
+            verificar = converter_oc_e_hex(immediate,c)
+            verificar = int(verificar,2)
+        elif immediate[0] == '0' and immediate[1] == 'b':
+            verificar = converter_oc_e_hex(immediate,b)
+            verificar = int(verificar,2)
         else:
-                verificar = int(immediate)
-        if verificar > 2047 or verificar < -2048:
-            return 0
-        else:
-            return 1
-    except ValueError:
-        return str(immediate)
+            verificar = int(immediate)
+    else:
+            verificar = int(immediate)
+    if verificar > 2047 or verificar < -2048:
+        return 0
+    else:
+        return 1
 
 def converter_immediate(immediate, x, h, c, b):
     if(x > 1):
@@ -80,31 +77,6 @@ def converter_immediate(immediate, x, h, c, b):
         immediate = bin(immediate)[2:]
         immediate = format(int(immediate, 2), '012b')
         return immediate
-
-def identificar_immediate(immediate, texto_t):
-    with open("Projeto/Arquivos_teste/"+) as arq:
-        x = ''
-        y = 0
-        for linha in texto :
-            linha = linha.replace("\n","") #removendo "\n"
-            print(linha)
-            linha = linha.replace(",","") #removendo vírgulas
-            #armazendo cada comando em uma posição do vetor
-            #x = linha.split(" ")
-            #identificando cada instrução
-            #removendo parenteses
-            linha = linha.replace("("," ")
-            linha = linha.replace(")"," ")
-            linha = linha.split(" ")
-            num = 1
-            mont.indentificar_funcao(linha, num, arquivo, arq)
-            y += 1
-        arq.close()
-        if i == immediate:
-            #immediate_aux = i
-            #print(i)
-
-    return #immediate_aux
 
 #100% funcional
 def lw(linha, num, nome_arq):
@@ -341,7 +313,7 @@ def srl(linha, num, nome_arq):
     return 
 
 #falta immediate receber outras bases
-def beq(linha, num, nome_arq, y):
+def beq(linha, num, nome_arq):
     #beq rs1, rs2, L1
     #imm[12]  imm[10:5] | rs2 |rs1 | funct3| imm[4:1] imm[11] |opcode
     opcode = '1100011'
@@ -366,9 +338,7 @@ def beq(linha, num, nome_arq, y):
     if(verificar == 0):
         print("ERRO: immediate maior que 12 bits!")
         return
-    print(verificar)
-    immediate = identificar_immediate(immediate, y)
-    return
+    
     immediate = converter_immediate(immediate, x, h, c, b)
     imm10_5 = immediate[1:7]
     imm4_1 = immediate[7:11]
@@ -782,7 +752,7 @@ def neg(linha, num, nome_arq):
     criar.criarArquivo_octal(resultado_octal, num, nome_arq)
     return
 
-def indentificar_funcao(x, num, arq, y):
+def indentificar_funcao(x, num, arq):
     if x[0] == 'lw':
         lw(x, num, arq)
     elif x[0] == 'sw':
@@ -796,7 +766,7 @@ def indentificar_funcao(x, num, arq, y):
     elif x[0] == 'srl':
         srl(x, num, arq)
     elif x[0] == 'beq':
-        beq(x, num, arq, y)
+        beq(x, num, arq)
     elif x[0] == 'jalr':
         jalr(x, num, arq)
     elif x[0] == 'mv':
