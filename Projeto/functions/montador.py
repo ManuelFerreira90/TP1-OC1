@@ -334,6 +334,8 @@ def beq(linha, num, nome_arq):
     h = 0
     b = 4
     
+    #verificando se o immediate cabe em 12 bits
+    x = len(immediate)
     verificar = verificar_immediate(immediate, x, h, c, b)
     if(verificar == 0):
         print("ERRO: immediate maior que 12 bits!")
@@ -343,7 +345,6 @@ def beq(linha, num, nome_arq):
     if(verificar == 0):
         print("ERRO: immediate maior que 12 bits!")
         return
-
     imm10_5 = immediate[1:7]
     imm4_1 = immediate[7:11]
     resultado = immediate[11] + imm10_5 + str(rs2) + str(rs1) + funct3 + imm4_1 + immediate[0] + opcode
