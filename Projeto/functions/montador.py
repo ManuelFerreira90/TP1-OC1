@@ -332,17 +332,66 @@ def beq(linha, num, nome_arq):
     x = len(immediate)
     c = 1
     h = 0
-    b = 4
-
-    verificar = verificar_immediate(immediate, x, h, c, b)
-    if(verificar == 0):
-        print("ERRO: immediate maior que 12 bits!")
-        return
     
-    immediate = converter_immediate(immediate, x, h, c, b)
-    imm10_5 = immediate[1:7]
-    imm4_1 = immediate[7:11]
-    resultado = immediate[11] + imm10_5 + str(rs2) + str(rs1) + funct3 + imm4_1 + immediate[0] + opcode
+    if(x > 1):
+        if immediate[0] =='-':
+            complemento_II = True
+            immediate = int(immediate)
+            immediate = immediate * -1
+            if(immediate > 2048):
+                print("ERRO: out of range")
+                return
+            immediate = list(bin(immediate)[2:])
+            for k in range(len(immediate)):
+                if(immediate[k] == "0"):
+                    immediate[k] = "1"
+                else:
+                    immediate[k] = "0"
+            aux = len(immediate)
+            immediate = int(''.join(immediate),2) + 1 
+            immediate = bin(immediate)[2:]
+            immediate = immediate.zfill(aux)
+            immediate = "{:1>{}}".format(immediate, 12)
+        elif immediate[0] == '0' and immediate[1] == 'x':
+            immediate = converter_oc_e_hex(immediate, h)
+            if(int(immediate, 2) < -2048 or int(immediate, 2) > 2047):
+                print("ERRO: out of range")
+                return 
+        elif immediate[0] == '0' and immediate[1] == 'c':
+            immediate = converter_oc_e_hex(immediate, c)
+            if(int(immediate, 2) < -2048 or int(immediate, 2) > 2047):
+                print("ERRO: out of range")
+                return 
+        else:
+            immediate = immediate.replace("x","")
+            immediate = int(immediate)
+            if(immediate > 2047):
+                print("ERRO: out of range")
+                return
+            immediate = bin(immediate)[2:]
+            immediate = format(int(immediate, 2), '012b')   
+    else:
+        immediate = immediate.replace("x","")
+        immediate = int(immediate)
+        if(immediate > 2047):
+            print("ERRO: out of range")
+            return
+        immediate = bin(immediate)[2:]
+        immediate = format(int(immediate, 2), '012b')
+
+    imm10_5 = ''
+    imm4_1 = ''
+    for i in range(len(immediate)):
+        if(i > 0 and i < 7):
+            imm10_5 += immediate[i]
+        elif(i > 6 and i < 11):
+            imm4_1 += immediate[i]
+
+    # resultado = immediate[0] + " - " + imm10_5 + " - " + str(rs2) + " - " + str(rs1) + " - " + funct3 + " - " + imm4_1 + " - " + immediate[1] + " - " + opcode
+
+    resultado = immediate[0] + imm10_5 + str(rs2) + str(rs1) + funct3 + imm4_1 + immediate[1] + opcode
+    print(resultado)
+
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
     criar.criarArquivo_bin(resultado, num, nome_arq)
