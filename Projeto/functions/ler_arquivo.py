@@ -42,3 +42,14 @@ def tratarConteudo(instrucao):
     instrucao = instrucao.split(" ")
     num = 2
     mont.indentificar_funcao(instrucao, num, x)
+
+def mostrar_conteudo():
+    try:
+        print("")
+        with open("Projeto/Arquivos_saida/output_entrada_01_bin_oct_hex.txt") as arq1:
+            mostrar = arq1.read()
+            print(mostrar)  
+        arq1.close()
+    except FileNotFoundError:
+        msg = "Infelizmente, ocorreu um erro no arquivo de saida!"
+        print(msg)

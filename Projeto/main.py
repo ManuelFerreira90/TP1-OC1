@@ -22,6 +22,7 @@ while(num != 9):
         num = int(input("\n\nQual arquivo deseja utilizar no montador: "))       
         arquivo = files[num]
         func.lerArquivo(arquivo)
+        func.mostrar_conteudo()
 
     elif num == 2:
         instrucao = input("Digite sua instrucao assembly: ")
