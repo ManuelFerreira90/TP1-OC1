@@ -42,34 +42,35 @@ def verificar_immediate(immediate, x, h, c, b):
 
 def converter_immediate(immediate, x, h, c, b):
     if(x > 1):
-        if immediate[0] == '-':
-            complemento_II = True
-            immediate = int(immediate)
-            immediate = immediate * -1
-            immediate = list(bin(immediate)[2:])
-            for k in range(len(immediate)):
-                if(immediate[k] == "0"):
-                    immediate[k] = "1"
-                else:
-                    immediate[k] = "0"
-            aux = len(immediate)
-            immediate = int(''.join(immediate),2) + 1 
-            immediate = bin(immediate)[2:]
-            immediate = immediate.zfill(aux)
-            immediate = "{:1>{}}".format(immediate, 12)
-            return immediate
-        elif immediate[0] == '0' and immediate[1] == 'x':
-            immediate = converter_oc_e_hex(immediate,h)
-            immediate = format(int(immediate, 2), '012b')
-            return immediate
-        elif immediate[0] == '0' and immediate[1] == 'c':
-            immediate = converter_oc_e_hex(immediate,c)
-            immediate = format(int(immediate, 2), '012b')
-            return immediate
-        elif immediate[0] == '0' and immediate[1] == 'b':
-            immediate = converter_oc_e_hex(immediate,b)
-            immediate = format(int(immediate, 2), '012b')
-            return immediate
+        if isinstance(immediate, str):
+            if immediate[0] == '-':
+                complemento_II = True
+                immediate = int(immediate)
+                immediate = immediate * -1
+                immediate = list(bin(immediate)[2:])
+                for k in range(len(immediate)):
+                    if(immediate[k] == "0"):
+                        immediate[k] = "1"
+                    else:
+                        immediate[k] = "0"
+                aux = len(immediate)
+                immediate = int(''.join(immediate),2) + 1 
+                immediate = bin(immediate)[2:]
+                immediate = immediate.zfill(aux)
+                immediate = "{:1>{}}".format(immediate, 12)
+                return immediate
+            elif immediate[0] == '0' and immediate[1] == 'x':
+                immediate = converter_oc_e_hex(immediate,h)
+                immediate = format(int(immediate, 2), '012b')
+                return immediate
+            elif immediate[0] == '0' and immediate[1] == 'c':
+                immediate = converter_oc_e_hex(immediate,c)
+                immediate = format(int(immediate, 2), '012b')
+                return immediate
+            elif immediate[0] == '0' and immediate[1] == 'b':
+                immediate = converter_oc_e_hex(immediate,b)
+                immediate = format(int(immediate, 2), '012b')
+                return immediate
         else:
             immediate = int(immediate)
             immediate = bin(immediate)[2:]
@@ -81,30 +82,23 @@ def converter_immediate(immediate, x, h, c, b):
         immediate = format(int(immediate, 2), '012b')
         return immediate
 
-def identificar_immediate(immediate, texto_t):
-    with open("Projeto/Arquivos_teste/"+) as arq:
-        x = ''
-        y = 0
+def identificar_immediate(arquivo, immediate):
+    with open("Projeto/Arquivos_teste/" + arquivo) as arq:
+        texto = arq.readlines() 
+        cont = 1
         for linha in texto :
             linha = linha.replace("\n","") #removendo "\n"
+            linha = linha.replace(":","") #removendo "\n"
             print(linha)
-            linha = linha.replace(",","") #removendo vírgulas
-            #armazendo cada comando em uma posição do vetor
-            #x = linha.split(" ")
-            #identificando cada instrução
-            #removendo parenteses
-            linha = linha.replace("("," ")
-            linha = linha.replace(")"," ")
-            linha = linha.split(" ")
-            num = 1
-            mont.indentificar_funcao(linha, num, arquivo, arq)
-            y += 1
+            print("cont = ", cont)
+            print(len(linha), len(immediate))
+            if(len(linha) == len(immediate)):
+                if(linha == immediate):
+                    print( (cont + 1) * 4)
+                    return (cont + 1) * 4
+            cont+=1
         arq.close()
-        if i == immediate:
-            #immediate_aux = i
-            #print(i)
-
-    return #immediate_aux
+        return ''
 
 #100% funcional
 def lw(linha, num, nome_arq):
@@ -361,12 +355,19 @@ def beq(linha, num, nome_arq, y):
         print("ERRO: immediate maior que 12 bits!")
         return
     print(verificar)
-    immediate = identificar_immediate(immediate, y)
-    return
-    immediate = converter_immediate(immediate, x, h, c, b)
+    immediate = identificar_immediate(nome_arq, immediate)
+    if isinstance(immediate, int):
+        immediate = converter_immediate(immediate, x, h, c, b)
+    else:
+        print("ERRO: immediate not found")
+        return
+    
     imm10_5 = immediate[1:7]
     imm4_1 = immediate[7:11]
     resultado = immediate[11] + imm10_5 + str(rs2) + str(rs1) + funct3 + imm4_1 + immediate[0] + opcode
+
+    print(immediate[11] + " " + imm10_5 + " " + str(rs2) + " " + str(rs1) + " " + funct3 + " " + imm4_1 + " " + immediate[0] + " " + opcode)
+
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
     criar.criarArquivo_bin(resultado, num, nome_arq)
