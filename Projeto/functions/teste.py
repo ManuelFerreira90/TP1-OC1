@@ -1,3 +1,5 @@
-i = 0
-if isinstance(i, int):
-    print("deu bom?")
+i = 'asdfasdf'
+int(i)
+print(i)
+# if isinstance(i, int):
+#     print("deu bom?")
