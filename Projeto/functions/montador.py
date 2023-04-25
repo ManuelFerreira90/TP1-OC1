@@ -680,11 +680,25 @@ def nop(linha, num, nome_arq):
 
 #100% funcional
 def j(linha, num, nome_arq):
+    c = 1
+    h = 0
+    b = 4
     opcode = '1101111'
     rd = '00000'
-    immediate = '00000000000000000000'
+    immediate = linha[1]
     resultado = ''
     
+    #verificando se o immediate cabe em 12 bits
+    x = len(immediate)
+    verificar = verificar_immediate(immediate, x, h, c, b)
+    if(verificar == 0):
+        print("ERRO: immediate maior que 12 bits!")
+        return
+    
+    #converter immediate
+    immediate = converter_immediate(immediate, x, h, c, b)
+    immediate = "{:1>{}}".format(immediate, 20)
+
     resultado = immediate + rd + opcode
     
     resultado_hex = converter_oc_e_hex(resultado, 2)
