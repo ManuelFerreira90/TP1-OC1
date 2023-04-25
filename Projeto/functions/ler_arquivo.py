@@ -3,15 +3,11 @@ import functions.montador as mont
 def lerArquivo(arquivo):
     
     try:
-        # with open("Projeto/Arquivos_teste/"+arquivo) as arq1:
-        #     texto_parat = arq1.read()
-        #     arq1.close()
         with open("Projeto/Arquivos_teste/"+arquivo) as arq:
             texto = arq.readlines()
             print("\nConteudo:")
             #variavel para armzenar cada linha do comando em assembly
             x = ''
-            y = 0
             for linha in texto :
                 linha = linha.replace("\n","") #removendo "\n"
                 print(linha)
@@ -23,10 +19,8 @@ def lerArquivo(arquivo):
                 linha = linha.replace("("," ")
                 linha = linha.replace(")"," ")
                 linha = linha.split(" ")
-                _linha = list(filter(lambda letra: letra != '', linha)) #Removendo ''
                 num = 1
-                mont.indentificar_funcao(_linha, num, arquivo, arq)
-                y += 1
+                mont.indentificar_funcao(linha, num, arquivo)
             arq.close()
 
     except FileNotFoundError:
