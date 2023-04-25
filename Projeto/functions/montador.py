@@ -340,9 +340,9 @@ def beq(linha, num, nome_arq):
     if(verificar == 0):
         print("ERRO: immediate maior que 12 bits!")
         return
-    imm10_5 = immediate[1:7]
-    imm4_1 = immediate[7:11]
-    resultado = immediate[11] + imm10_5 + str(rs2) + str(rs1) + funct3 + imm4_1 + immediate[0] + opcode
+    imm10_5 = immediate[0:7]
+    imm4_1 = immediate[7:12]
+    resultado = imm10_5 + str(rs2) + str(rs1) + funct3 + imm4_1 + opcode
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
     criar.criarArquivo_bin(resultado, num, nome_arq)
@@ -690,11 +690,24 @@ def j(linha, num, nome_arq):
     resultado = ''
     
     #verificando se o immediate cabe em 12 bits
+    
     x = len(immediate)
-    verificar = verificar_immediate(immediate, x, h, c, b)
-    if(verificar == 0):
-        print("ERRO: immediate maior que 12 bits!")
-        return
+    if(x > 1):
+        if immediate[0] == '0' and immediate[1] == 'x':
+            verificar = converter_oc_e_hex(immediate,h)
+            verificar = int(verificar,2)
+        elif immediate[0] == '0' and immediate[1] == 'c':
+            verificar = converter_oc_e_hex(immediate,c)
+            verificar = int(verificar,2)
+        elif immediate[0] == '0' and immediate[1] == 'b':
+            verificar = converter_oc_e_hex(immediate,b)
+            verificar = int(verificar,2)
+        else:
+            verificar = int(immediate)
+    else:
+            verificar = int(immediate)
+    if verificar > 1048576 or verificar < -1048577:
+        return print("ERRO: immediate maior que 20 bits!")
     
     if(x > 1):
         if immediate[0] == '-':
@@ -731,14 +744,17 @@ def j(linha, num, nome_arq):
         immediate = bin(immediate)[2:]
         immediate = format(int(immediate, 2), '020b')
 
-    print(immediate) 
-    resultado = immediate + rd + opcode
-    print(resultado)
-    # resultado_hex = converter_oc_e_hex(resultado, 2)
-    # resultado_octal = converter_oc_e_hex(resultado, 3)
-    # criar.criarArquivo_bin(resultado, num, nome_arq)
-    # criar.criarArquivo_hex(resultado_hex, num, nome_arq)
-    # criar.criarArquivo_octal(resultado_octal, num, nome_arq)
+    immediate4 = immediate[0]
+    immediate3 = immediate[9:20]
+    immediate2 = immediate[8]
+    immediate1 = immediate[1:8]
+    
+    resultado = immediate4 + immediate3 + immediate2 + immediate1 + rd + opcode
+    resultado_hex = converter_oc_e_hex(resultado, 2)
+    resultado_octal = converter_oc_e_hex(resultado, 3)
+    criar.criarArquivo_bin(resultado, num, nome_arq)
+    criar.criarArquivo_hex(resultado_hex, num, nome_arq)
+    criar.criarArquivo_octal(resultado_octal, num, nome_arq)
     return
 
 #100% funcional
