@@ -30,7 +30,6 @@ def verificar_immediate(immediate, x, h, c, b):
                 verificar = converter_oc_e_hex(immediate,b)
                 verificar = int(verificar,2)
             else:
-                immediate = str(int(immediate, 2))
                 verificar = int(immediate)
         else:
                 verificar = int(immediate)
@@ -72,16 +71,11 @@ def converter_immediate(immediate, x, h, c, b):
                 immediate = converter_oc_e_hex(immediate,b)
                 immediate = format(int(immediate, 2), '012b')
                 return immediate
-            else:
-                immediate = int(immediate)
-                immediate = bin(immediate)[2:]
-                immediate = format(int(immediate, 2), '012b')
-                return immediate 
         else:
-                immediate = int(immediate)
-                immediate = bin(immediate)[2:]
-                immediate = format(int(immediate, 2), '012b')
-                return immediate 
+            immediate = int(immediate)
+            immediate = bin(immediate)[2:]
+            immediate = format(int(immediate, 2), '012b')
+            return immediate   
     else:
         immediate = int(immediate)
         immediate = bin(immediate)[2:]
@@ -95,8 +89,12 @@ def identificar_immediate(arquivo, immediate):
         for linha in texto :
             linha = linha.replace("\n","") #removendo "\n"
             linha = linha.replace(":","") #removendo "\n"
+            print(linha)
+            print("cont = ", cont)
+            print(len(linha), len(immediate))
             if(len(linha) == len(immediate)):
                 if(linha == immediate):
+                    print( (cont + 1) * 4)
                     return (cont + 1) * 4
             cont+=1
         arq.close()
@@ -358,24 +356,24 @@ def beq(linha, num, nome_arq, y):
     h = 0
     b = 4
 
-    if str(immediate).isnumeric():
-        immediate = converter_immediate(immediate, x, h, c, b)
-    else:
-        immediate = identificar_immediate(nome_arq, immediate)
-        if isinstance(immediate, int):
-            immediate = converter_immediate(immediate, x, h, c, b)
-        else:
-            print("ERRO: immediate not found")
-            return
-    
     verificar = verificar_immediate(immediate, x, h, c, b)
     if(verificar == 0):
         print("ERRO: immediate maior que 12 bits!")
         return
-
+    print(verificar)
+    immediate = identificar_immediate(nome_arq, immediate)
+    if isinstance(immediate, int):
+        immediate = converter_immediate(immediate, x, h, c, b)
+    else:
+        print("ERRO: immediate not found")
+        return
+    
     imm10_5 = immediate[1:7]
     imm4_1 = immediate[7:11]
     resultado = immediate[11] + imm10_5 + str(rs2) + str(rs1) + funct3 + imm4_1 + immediate[0] + opcode
+
+    print(immediate[11] + " " + imm10_5 + " " + str(rs2) + " " + str(rs1) + " " + funct3 + " " + imm4_1 + " " + immediate[0] + " " + opcode)
+
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
     criar.criarArquivo_bin(resultado, num, nome_arq)
