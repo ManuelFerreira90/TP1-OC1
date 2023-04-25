@@ -113,7 +113,6 @@ def lw(linha, num, nome_arq):
     resultado = ''
 
     resultado = immediate + rs1 + func3 + rd + opcode
-    print(resultado)
 
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -155,7 +154,6 @@ def sw(linha, num, nome_arq):
     immediate2 = immediate[7:12]
     
     resultado = immediate1 + str(rs2) + str(rs1) + funct3 + immediate2 + opcode
-    print(resultado)
 
     # resultado_hex = converter_oc_e_hex(resultado, 2)
     # resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -191,7 +189,6 @@ def sub(linha, num, nome_arq):
      
     
     resultado = funct7 + rs2 + rs1 + funct3 + rd + opcode
-    print(resultado)
         
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -219,7 +216,6 @@ def xor(linha, num, nome_arq):
     rs2 = bin(int(rs2))[2:]
     rs2 = format(int(rs2, 2), '05b')
     resultado = funct7 + str(rs2) + str(rs1) + funct3 + rd + opcode
-    print(resultado)
         
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -269,7 +265,6 @@ def addi(linha, num, nome_arq):
     resultado = ''
     
     resultado = immediate + rs1 + func3 + rd + opcode
-    print(resultado)
 
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -303,7 +298,6 @@ def srl(linha, num, nome_arq):
     rs2 = format(int(rs2, 2), '05b')
     
     resultado = funct7 + rs2 + rs1 + funct3 + rd + opcode
-    print(resultado)
 
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -394,7 +388,6 @@ def jalr(linha, num, nome_arq):
     resultado = ''
     
     resultado = immediate + rs1 + funct3 + rd + opcode
-    print(resultado)
         
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -429,7 +422,6 @@ def mv(linha, num, nome_arq):
     resultado = ''
     
     resultado = immediate + rs1 + func3 + rd + opcode
-    print(resultado)
 
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -481,7 +473,7 @@ def mv(linha, num, nome_arq):
     # resultado = ''
     
     # resultado = [funct4] + [rs1] + [rd_aux] + [rs2_aux] + [opcode]
-    # print(resultado)
+    
         
     # resultado_hex = converter_oc_e_hex(resultado, 2)
     # resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -505,7 +497,6 @@ def noti(linha, num, nome_arq):
     rs1 = format(int(rs1, 2), '05b')
 
     resultado = immediate + str(rs1) + funct3 + rd + opcode
-    print(resultado)
         
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -540,7 +531,7 @@ def noti(linha, num, nome_arq):
     # resultado = ''
 
     # resultado = [funct3] + [rd] + [rs1_aux] + [immediate] + [opcode]
-    # print(resultado)
+    
         
     # resultado_hex = converter_oc_e_hex(resultado, 2)
     # resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -579,7 +570,6 @@ def li(linha, num, nome_arq):
     resultado = ''
     
     resultado = immediate + rs1 + func3 + rd + opcode
-    print(resultado)
 
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -661,7 +651,7 @@ def li(linha, num, nome_arq):
 
 
     # resultado = [funct3] + [immediate_aux] + [rd_aux] + [immediate2] + [opcode]
-    # print(resultado)
+    
         
     # resultado_hex = converter_oc_e_hex(resultado, 2)
     # resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -680,7 +670,6 @@ def nop(linha, num, nome_arq):
     resultado = ''
     
     resultado = immediate + rs1 + funct3 + rd + opcode
-    print(resultado)
     
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -697,7 +686,6 @@ def j(linha, num, nome_arq):
     resultado = ''
     
     resultado = immediate + rd + opcode
-    print(resultado)
     
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -716,7 +704,6 @@ def ret(linha, num, nome_arq):
     resultado = ''
     
     resultado = immediate + rs1 + funct3 + rd + opcode
-    print(resultado)
     
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
@@ -748,7 +735,6 @@ def neg(linha, num, nome_arq):
     resultado = ''
     
     resultado = funct7 + rs2 + rs1 + funct3 + rd + opcode
-    print(resultado)
     
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
