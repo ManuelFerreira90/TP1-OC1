@@ -23,9 +23,8 @@ def lerArquivo(arquivo):
                 linha = linha.replace("("," ")
                 linha = linha.replace(")"," ")
                 linha = linha.split(" ")
-                _linha = list(filter(lambda letra: letra != '', linha)) #Removendo ''
                 num = 1
-                mont.indentificar_funcao(_linha, num, arquivo, arq)
+                mont.indentificar_funcao(linha, num, arquivo, arq)
                 y += 1
             arq.close()
 
