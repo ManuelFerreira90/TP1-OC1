@@ -3,6 +3,21 @@ import functions.montador as mont
 def lerArquivo(arquivo):
     
     try:
+        nomeArq = str(arquivo).replace(".asm", "")
+        with open("Projeto/Arquivos_saida/output_"+ nomeArq +".txt", "w") as arq1:
+            arq1.truncate(0)
+            arq1.close()
+        with open("Projeto/Arquivos_saida/Binario/output_"+ nomeArq +".txt", "w") as arq1:
+            arq1.truncate(0)
+            arq1.close()
+        with open("Projeto/Arquivos_saida/Hexadecimal/output_"+ nomeArq +".txt", "w") as arq1:
+            arq1.truncate(0)
+            arq1.close()
+        with open("Projeto/Arquivos_saida/Octal/output_"+ nomeArq +".txt", "w") as arq1:
+            arq1.truncate(0)
+            arq1.close()
+            
+
         with open("Projeto/Arquivos_teste/"+arquivo) as arq:
             texto = arq.readlines()
             print("\nConteudo:")
@@ -43,10 +58,10 @@ def tratarConteudo(instrucao):
     num = 2
     mont.indentificar_funcao(instrucao, num, x)
 
-def mostrar_conteudo():
+def mostrar_conteudo(x):
     try:
         print("")
-        with open("Projeto/Arquivos_saida/output_entrada_01_bin_oct_hex.txt") as arq1:
+        with open("Projeto/Arquivos_saida/output_" + x + "_bin_oct_hex.txt") as arq1:
             mostrar = arq1.read()
             print(mostrar)  
         arq1.close()

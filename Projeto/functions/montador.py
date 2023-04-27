@@ -323,7 +323,11 @@ def beq(linha, num, nome_arq):
     rs2 = format(int(rs2, 2), '05b') #preenchendo rs2 para 5bits
 
     immediate = linha[3]
+    immediate = int(immediate) / 2
+    immediate = str(int(immediate))
     complemento_II = False
+    # if(immediate[0]=='-'):
+    #     complemento_II = True
     x = len(immediate)
     c = 1
     h = 0
@@ -341,8 +345,24 @@ def beq(linha, num, nome_arq):
         print("ERRO: immediate maior que 12 bits!")
         return
     
-    resultado = immediate[0] + immediate[1:7] + str(rs2) + str(rs1) + funct3 + immediate[7:11] + immediate[11] + opcode
-    #resultado = immediate[0] + immediate[2:8] + str(rs2) + str(rs1) + funct3 + immediate[8:12] + immediate[11] + opcode
+    print(immediate)
+
+    # immediate = bin(int(immediate, 2) >> 1)[2:] 
+    # if(complemento_II):
+    #     immediate = "{:1>{}}".format(immediate, 12)
+    # else:
+    #     immediate = "{:0>{}}".format(immediate, 12)
+    
+    # immediate = bin(int(immediate, 2) << 1)[2:] 
+
+    print(immediate)
+    
+    imm10_5 = immediate[2:8]
+    imm4_1 = immediate[8:12]
+    #imm[12]  imm[10:5] | rs2 |rs1 | funct3| imm[4:1] imm[11] |opcode
+
+    resultado = immediate[0] + imm10_5 + str(rs2) + str(rs1) + funct3 + imm4_1 + immediate[1] + opcode
+    
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
     criar.criarArquivo_bin(resultado, num, nome_arq)
@@ -681,6 +701,7 @@ def nop(linha, num, nome_arq):
 
 #100% funcional
 def j(linha, num, nome_arq):
+    complemento_II = False
     c = 1
     h = 0
     b = 4
@@ -743,8 +764,15 @@ def j(linha, num, nome_arq):
         immediate = int(immediate)
         immediate = bin(immediate)[2:]
         immediate = format(int(immediate, 2), '020b')
-
-    resultado = immediate[0] + immediate[9:20] + immediate[8] + immediate[1:8] + rd + opcode
+    
+    immediate = bin(int(immediate, 2) >> 1)[2:] 
+    if(complemento_II):
+        immediate = "{:1>{}}".format(immediate, 20)
+    else:
+        immediate = "{:0>{}}".format(immediate, 20)
+    
+    resultado = immediate[0] + immediate[10:20] + immediate[9] + immediate[1:9] + rd + opcode
+    #resultado = immediate[0] + immediate[9:20] + immediate[8] + immediate[1:8] + rd + opcode
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
     criar.criarArquivo_bin(resultado, num, nome_arq)
