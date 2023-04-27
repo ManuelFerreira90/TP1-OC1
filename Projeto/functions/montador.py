@@ -344,19 +344,7 @@ def beq(linha, num, nome_arq):
     if(verificar == 0):
         print("ERRO: immediate maior que 12 bits!")
         return
-    
-    print(immediate)
 
-    # immediate = bin(int(immediate, 2) >> 1)[2:] 
-    # if(complemento_II):
-    #     immediate = "{:1>{}}".format(immediate, 12)
-    # else:
-    #     immediate = "{:0>{}}".format(immediate, 12)
-    
-    # immediate = bin(int(immediate, 2) << 1)[2:] 
-
-    print(immediate)
-    
     imm10_5 = immediate[2:8]
     imm4_1 = immediate[8:12]
     #imm[12]  imm[10:5] | rs2 |rs1 | funct3| imm[4:1] imm[11] |opcode

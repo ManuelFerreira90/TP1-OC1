@@ -61,7 +61,8 @@ def tratarConteudo(instrucao):
 def mostrar_conteudo(x):
     try:
         print("")
-        with open("Projeto/Arquivos_saida/output_" + x + "_bin_oct_hex.txt") as arq1:
+        nomeArq = str(x).replace(".asm", "")
+        with open("Projeto/Arquivos_saida/output_" + nomeArq + ".txt") as arq1:
             mostrar = arq1.read()
             print(mostrar)  
         arq1.close()
