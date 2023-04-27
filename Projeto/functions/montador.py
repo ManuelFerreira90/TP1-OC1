@@ -156,11 +156,11 @@ def sw(linha, num, nome_arq):
     
     resultado = immediate1 + str(rs2) + str(rs1) + funct3 + immediate2 + opcode
 
-    # resultado_hex = converter_oc_e_hex(resultado, 2)
-    # resultado_octal = converter_oc_e_hex(resultado, 3)
-    # criar.criarArquivo_bin(resultado, num, nome_arq)
-    # criar.criarArquivo_hex(resultado_hex, num, nome_arq)
-    # criar.criarArquivo_octal(resultado_octal, num, nome_arq)
+    resultado_hex = converter_oc_e_hex(resultado, 2)
+    resultado_octal = converter_oc_e_hex(resultado, 3)
+    criar.criarArquivo_bin(resultado, num, nome_arq)
+    criar.criarArquivo_hex(resultado_hex, num, nome_arq)
+    criar.criarArquivo_octal(resultado_octal, num, nome_arq)
     return
 
 #100% funcional
@@ -326,8 +326,7 @@ def beq(linha, num, nome_arq):
     immediate = int(immediate) / 2
     immediate = str(int(immediate))
     complemento_II = False
-    # if(immediate[0]=='-'):
-    #     complemento_II = True
+    
     x = len(immediate)
     c = 1
     h = 0
@@ -437,58 +436,6 @@ def mv(linha, num, nome_arq):
     criar.criarArquivo_bin(resultado, num, nome_arq)
     criar.criarArquivo_hex(resultado_hex, num, nome_arq)
     criar.criarArquivo_octal(resultado_octal, num, nome_arq)
-    
-    
-    
-    #compressed function 16bits
-    # opcode = '10'
-    # funct4 = '100'
-    # rs1 = '0'
-    
-    # rd = linha[1]
-    # rs2 = linha[2]
-    
-    # rd = rd.replace("x","")
-    # rs2 = rs2.replace("x","")
-    # rd = int(rd)
-    # rd = bin(rd)[2:]
-    # rs2 = int(rs2)
-    # rs2 = bin(rs2)[2:]
-    
-    # rd = str(rd)
-    # rs2 = str(rs2)
-   
-    # rd_aux = ['0','0','0','0','0']
-    # rs2_aux = ['0','0','0','0','0']
-    
-    # y = len(rd) - 1
-    # z = len(rs2) - 1
-    # v = 0
-  
-    # for k in range(5):
-    #     if(k == 4 - y):
-    #         rd_aux[k] = rd[v]
-    #         y -=1
-    #         v += 1
-    # v = 0
-    # for k in range(5):
-    #     if(k == 4 - z):
-    #         rs2_aux[k] = rs2[v]
-    #         z -=1
-    #         v += 1
-
-    # rd_aux = ''.join(rd_aux)
-    # rs2_aux = ''.join(rs2_aux)
-    # resultado = ''
-    
-    # resultado = [funct4] + [rs1] + [rd_aux] + [rs2_aux] + [opcode]
-    
-        
-    # resultado_hex = converter_oc_e_hex(resultado, 2)
-    # resultado_octal = converter_oc_e_hex(resultado, 3)
-    # criar.criarArquivo_bin(resultado, num, nome_arq)
-    # criar.criarArquivo_hex(resultado_hex, num, nome_arq)
-    # criar.criarArquivo_octal(resultado_octal, num, nome_arq)
     return
 
 #100% funcional
@@ -512,41 +459,6 @@ def noti(linha, num, nome_arq):
     criar.criarArquivo_bin(resultado, num, nome_arq)
     criar.criarArquivo_hex(resultado_hex, num, nome_arq)
     criar.criarArquivo_octal(resultado_octal, num, nome_arq)
-    
-    #compressed function 16bits
-    #jr
-    # opcode = '10'
-    # funct3 = '100'
-    # immediate = '00000'
-    # rd = '0'
-    # rs1 = linha[3]
-    # rs1 = str(rs1)
-    # rs1 = rs1.replace("x","")
-    # rs1 = int(rs1)
-    # rs1 = bin(rs1)[2:]
-    
-    # rs1_aux = ['0','0','0','0','0']
-    
-    # z = len(rs1) - 1
-    # v = 0
-    
-    # for k in range(5):
-    #     if(k == 4 - z):
-    #         rs1_aux[k] = rs1[v]
-    #         z -=1
-    #         v += 1
-
-    # rs1_aux = ''.join(rs1_aux)
-    # resultado = ''
-
-    # resultado = [funct3] + [rd] + [rs1_aux] + [immediate] + [opcode]
-    
-        
-    # resultado_hex = converter_oc_e_hex(resultado, 2)
-    # resultado_octal = converter_oc_e_hex(resultado, 3)
-    # criar.criarArquivo_bin(resultado, num, nome_arq)
-    # criar.criarArquivo_hex(resultado_hex, num, nome_arq)
-    # criar.criarArquivo_octal(resultado_octal, num, nome_arq)
     return
     
 #100% funcional
@@ -585,88 +497,6 @@ def li(linha, num, nome_arq):
     criar.criarArquivo_bin(resultado, num, nome_arq)
     criar.criarArquivo_hex(resultado_hex, num, nome_arq)
     criar.criarArquivo_octal(resultado_octal, num, nome_arq)
-    #compressed function 16bits
-    # c = 1
-    # h = 0
-    # opcode = '01'
-    # funct3 = '010'
-    # rd = linha[1]
-    # immediate = linha[2]
-    
-    # rd = str(rd)
-    # rd = rd.replace("x","")
-    # rd = int(rd)
-    # rd = bin(rd)[2:]
-    
-    # immediate = str(immediate)
-    # complemento_II = False
-    
-    # if immediate[0] == '0' and immediate[1] == 'x':
-    #     immediate = converter_oc_e_hex(immediate,h)
-    # elif immediate[0] == '0' and immediate[1] == 'c':
-    #     immediate = converter_oc_e_hex(immediate,c)     
-    # elif immediate[0] =='-':
-    #     complemento_II = True
-    #     immediate = int(immediate)
-    #     immediate = immediate * -1
-    #     immediate = list(bin(immediate)[2:])
-    #     for k in range(len(immediate)):
-    #         if(immediate[k] == "0"):
-    #             immediate[k] = "1"
-    #         else:
-    #             immediate[k] = "0"
-    #     aux = len(immediate)
-    #     immediate = int(''.join(immediate),2) + 1 
-    #     immediate = bin(immediate)[2:]
-    #     immediate = immediate.zfill(aux)
-    # else:
-    #     immediate = immediate.replace("x","")
-    #     immediate = int(immediate)
-    #     immediate = bin(immediate)[2:]
-
-    # immediate_aux = ['0']
-    # immediate2 = ['0','0','0','0','0']
-    # rd_aux = ['0','0','0','0','0']
-    
-    # x = len(immediate) - 1
-    # y = len(rd) - 1
-    # v = 0
-
-    # for k in range(6): 
-    #     if k == 0:
-    #         if(k == 5 - x):
-    #             immediate_aux[k] = immediate[v]
-    #             v += 1
-    #             x -= 1
-                
-    #     else:
-    #         if(k == 5 - x):
-    #             immediate2[k-1] = immediate[v]
-    #             v += 1
-    #             x -= 1
-        
-    # v = 0    
-    # for k in range(5):
-    #     if(k == 4 - y):
-    #         rd_aux[k] = rd[v]
-    #         y -=1
-    #         v += 1
-    # v = 0
-    
-    # rd_aux = ''.join(rd_aux)
-    # immediate_aux = ''.join(immediate_aux)
-    # immediate2 = ''.join(immediate2)
-    # resultado = ''
-
-
-    # resultado = [funct3] + [immediate_aux] + [rd_aux] + [immediate2] + [opcode]
-    
-        
-    # resultado_hex = converter_oc_e_hex(resultado, 2)
-    # resultado_octal = converter_oc_e_hex(resultado, 3)
-    # criar.criarArquivo_bin(resultado, num, nome_arq)
-    # criar.criarArquivo_hex(resultado_hex, num, nome_arq)
-    # criar.criarArquivo_octal(resultado_octal, num, nome_arq)
     return 
 
 #100% funcional 
@@ -817,6 +647,241 @@ def neg(linha, num, nome_arq):
     criar.criarArquivo_octal(resultado_octal, num, nome_arq)
     return
 
+#100% funcional
+def bne(linha, num, nome_arq):
+    opcode = '1100011'
+    funct3 = '001'
+    rs1 = linha[1]
+    rs1 = rs1.replace("x", "")
+    rs1 = bin(int(rs1))[2:]
+    rs1 = format(int(rs1, 2), '05b') #preenchendo rs1 para 5bits
+    rs2 = linha[2]
+    rs2 = rs2.replace("x", "")
+    rs2 = bin(int(rs2))[2:]
+    rs2 = format(int(rs2, 2), '05b') #preenchendo rs2 para 5bits
+
+    immediate = linha[3]
+    immediate = int(immediate) / 2
+    immediate = str(int(immediate))
+    complemento_II = False
+    
+    x = len(immediate)
+    c = 1
+    h = 0
+    b = 4
+    
+    #verificando se o immediate cabe em 12 bits
+    x = len(immediate)
+    verificar = verificar_immediate(immediate, x, h, c, b)
+    if(verificar == 0):
+        print("ERRO: immediate maior que 12 bits!")
+        return
+    immediate = converter_immediate(immediate, x, h, c, b)
+    
+    if(verificar == 0):
+        print("ERRO: immediate maior que 12 bits!")
+        return
+
+    imm10_5 = immediate[2:8]
+    imm4_1 = immediate[8:12]
+    #imm[12]  imm[10:5] | rs2 |rs1 | funct3| imm[4:1] imm[11] |opcode
+
+    resultado = immediate[0] + imm10_5 + str(rs2) + str(rs1) + funct3 + imm4_1 + immediate[1] + opcode
+    
+    resultado_hex = converter_oc_e_hex(resultado, 2)
+    resultado_octal = converter_oc_e_hex(resultado, 3)
+    criar.criarArquivo_bin(resultado, num, nome_arq)
+    criar.criarArquivo_hex(resultado_hex, num, nome_arq)
+    criar.criarArquivo_octal(resultado_octal, num, nome_arq)
+
+#100% funcional
+def blt(linha, num, nome_arq):
+    opcode = '1100011'
+    funct3 = '100'
+    rs1 = linha[1]
+    rs1 = rs1.replace("x", "")
+    rs1 = bin(int(rs1))[2:]
+    rs1 = format(int(rs1, 2), '05b') #preenchendo rs1 para 5bits
+    rs2 = linha[2]
+    rs2 = rs2.replace("x", "")
+    rs2 = bin(int(rs2))[2:]
+    rs2 = format(int(rs2, 2), '05b') #preenchendo rs2 para 5bits
+
+    immediate = linha[3]
+    immediate = int(immediate) / 2
+    immediate = str(int(immediate))
+    complemento_II = False
+    
+    x = len(immediate)
+    c = 1
+    h = 0
+    b = 4
+    
+    #verificando se o immediate cabe em 12 bits
+    x = len(immediate)
+    verificar = verificar_immediate(immediate, x, h, c, b)
+    if(verificar == 0):
+        print("ERRO: immediate maior que 12 bits!")
+        return
+    immediate = converter_immediate(immediate, x, h, c, b)
+    
+    if(verificar == 0):
+        print("ERRO: immediate maior que 12 bits!")
+        return
+
+    imm10_5 = immediate[2:8]
+    imm4_1 = immediate[8:12]
+    #imm[12]  imm[10:5] | rs2 |rs1 | funct3| imm[4:1] imm[11] |opcode
+
+    resultado = immediate[0] + imm10_5 + str(rs2) + str(rs1) + funct3 + imm4_1 + immediate[1] + opcode
+    
+    resultado_hex = converter_oc_e_hex(resultado, 2)
+    resultado_octal = converter_oc_e_hex(resultado, 3)
+    criar.criarArquivo_bin(resultado, num, nome_arq)
+    criar.criarArquivo_hex(resultado_hex, num, nome_arq)
+    criar.criarArquivo_octal(resultado_octal, num, nome_arq)
+
+#100% funcional
+def bge(linha, num, nome_arq):
+    opcode = '1100011'
+    funct3 = '101'
+    rs1 = linha[1]
+    rs1 = rs1.replace("x", "")
+    rs1 = bin(int(rs1))[2:]
+    rs1 = format(int(rs1, 2), '05b') #preenchendo rs1 para 5bits
+    rs2 = linha[2]
+    rs2 = rs2.replace("x", "")
+    rs2 = bin(int(rs2))[2:]
+    rs2 = format(int(rs2, 2), '05b') #preenchendo rs2 para 5bits
+
+    immediate = linha[3]
+    immediate = int(immediate) / 2
+    immediate = str(int(immediate))
+    complemento_II = False
+    
+    x = len(immediate)
+    c = 1
+    h = 0
+    b = 4
+    
+    #verificando se o immediate cabe em 12 bits
+    x = len(immediate)
+    verificar = verificar_immediate(immediate, x, h, c, b)
+    if(verificar == 0):
+        print("ERRO: immediate maior que 12 bits!")
+        return
+    immediate = converter_immediate(immediate, x, h, c, b)
+    
+    if(verificar == 0):
+        print("ERRO: immediate maior que 12 bits!")
+        return
+
+    imm10_5 = immediate[2:8]
+    imm4_1 = immediate[8:12]
+    #imm[12]  imm[10:5] | rs2 |rs1 | funct3| imm[4:1] imm[11] |opcode
+
+    resultado = immediate[0] + imm10_5 + str(rs2) + str(rs1) + funct3 + imm4_1 + immediate[1] + opcode
+    
+    resultado_hex = converter_oc_e_hex(resultado, 2)
+    resultado_octal = converter_oc_e_hex(resultado, 3)
+    criar.criarArquivo_bin(resultado, num, nome_arq)
+    criar.criarArquivo_hex(resultado_hex, num, nome_arq)
+    criar.criarArquivo_octal(resultado_octal, num, nome_arq)
+
+#100% funcional
+def bltu(linha, num, nome_arq):
+    opcode = '1100011'
+    funct3 = '110'
+    rs1 = linha[1]
+    rs1 = rs1.replace("x", "")
+    rs1 = bin(int(rs1))[2:]
+    rs1 = format(int(rs1, 2), '05b') #preenchendo rs1 para 5bits
+    rs2 = linha[2]
+    rs2 = rs2.replace("x", "")
+    rs2 = bin(int(rs2))[2:]
+    rs2 = format(int(rs2, 2), '05b') #preenchendo rs2 para 5bits
+
+    immediate = linha[3]
+    immediate = int(immediate) / 2
+    immediate = str(int(immediate))
+    complemento_II = False
+    
+    x = len(immediate)
+    c = 1
+    h = 0
+    b = 4
+    
+    #verificando se o immediate cabe em 12 bits
+    x = len(immediate)
+    verificar = verificar_immediate(immediate, x, h, c, b)
+    if(verificar == 0):
+        print("ERRO: immediate maior que 12 bits!")
+        return
+    immediate = converter_immediate(immediate, x, h, c, b)
+    
+    if(verificar == 0):
+        print("ERRO: immediate maior que 12 bits!")
+        return
+
+    imm10_5 = immediate[2:8]
+    imm4_1 = immediate[8:12]
+    #imm[12]  imm[10:5] | rs2 |rs1 | funct3| imm[4:1] imm[11] |opcode
+
+    resultado = immediate[0] + imm10_5 + str(rs2) + str(rs1) + funct3 + imm4_1 + immediate[1] + opcode
+    
+    resultado_hex = converter_oc_e_hex(resultado, 2)
+    resultado_octal = converter_oc_e_hex(resultado, 3)
+    criar.criarArquivo_bin(resultado, num, nome_arq)
+    criar.criarArquivo_hex(resultado_hex, num, nome_arq)
+    criar.criarArquivo_octal(resultado_octal, num, nome_arq)
+
+#100% funcional
+def bgeu(linha, num, nome_arq):
+    opcode = '1100011'
+    funct3 = '111'
+    rs1 = linha[1]
+    rs1 = rs1.replace("x", "")
+    rs1 = bin(int(rs1))[2:]
+    rs1 = format(int(rs1, 2), '05b') #preenchendo rs1 para 5bits
+    rs2 = linha[2]
+    rs2 = rs2.replace("x", "")
+    rs2 = bin(int(rs2))[2:]
+    rs2 = format(int(rs2, 2), '05b') #preenchendo rs2 para 5bits
+
+    immediate = linha[3]
+    immediate = int(immediate) / 2
+    immediate = str(int(immediate))
+    complemento_II = False
+    
+    x = len(immediate)
+    c = 1
+    h = 0
+    b = 4
+    
+    #verificando se o immediate cabe em 12 bits
+    x = len(immediate)
+    verificar = verificar_immediate(immediate, x, h, c, b)
+    if(verificar == 0):
+        print("ERRO: immediate maior que 12 bits!")
+        return
+    immediate = converter_immediate(immediate, x, h, c, b)
+    
+    if(verificar == 0):
+        print("ERRO: immediate maior que 12 bits!")
+        return
+
+    imm10_5 = immediate[2:8]
+    imm4_1 = immediate[8:12]
+    #imm[12]  imm[10:5] | rs2 |rs1 | funct3| imm[4:1] imm[11] |opcode
+
+    resultado = immediate[0] + imm10_5 + str(rs2) + str(rs1) + funct3 + imm4_1 + immediate[1] + opcode
+    
+    resultado_hex = converter_oc_e_hex(resultado, 2)
+    resultado_octal = converter_oc_e_hex(resultado, 3)
+    criar.criarArquivo_bin(resultado, num, nome_arq)
+    criar.criarArquivo_hex(resultado_hex, num, nome_arq)
+    criar.criarArquivo_octal(resultado_octal, num, nome_arq)
+
 def indentificar_funcao(x, num, arq):
     if x[0] == 'lw':
         lw(x, num, arq)
@@ -848,3 +913,14 @@ def indentificar_funcao(x, num, arq):
         ret(x, num, arq)
     elif x[0] == 'neg':
         neg(x, num, arq)
+    elif x[0] == 'bne':
+        bne(x, num, arq)
+    elif x[0] == 'blt':
+        blt(x, num, arq)
+    elif x[0] == 'bge':
+        bge(x, num, arq)
+    elif x[0] == 'bltu':
+        bltu(x, num, arq)
+    elif x[0] == 'bgeu':
+        bgeu(x, num, arq)
+    

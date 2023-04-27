@@ -1,4 +1,4 @@
-import os  
+import os 
 import functions.ler_arquivo as func
 import functions.montador as mont
 
