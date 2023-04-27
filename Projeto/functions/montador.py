@@ -307,7 +307,7 @@ def srl(linha, num, nome_arq):
     criar.criarArquivo_octal(resultado_octal, num, nome_arq)
     return 
 
-#falta immediate receber outras bases
+#100% funcional
 def beq(linha, num, nome_arq):
     #beq rs1, rs2, L1
     #imm[12]  imm[10:5] | rs2 |rs1 | funct3| imm[4:1] imm[11] |opcode
@@ -343,7 +343,6 @@ def beq(linha, num, nome_arq):
     
     resultado = immediate[0] + immediate[1:7] + str(rs2) + str(rs1) + funct3 + immediate[7:11] + immediate[11] + opcode
     #resultado = immediate[0] + immediate[2:8] + str(rs2) + str(rs1) + funct3 + immediate[8:12] + immediate[11] + opcode
-    print(resultado)
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
     criar.criarArquivo_bin(resultado, num, nome_arq)
@@ -746,7 +745,6 @@ def j(linha, num, nome_arq):
         immediate = format(int(immediate, 2), '020b')
 
     resultado = immediate[0] + immediate[9:20] + immediate[8] + immediate[1:8] + rd + opcode
-    print(resultado)
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
     criar.criarArquivo_bin(resultado, num, nome_arq)
