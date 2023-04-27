@@ -340,9 +340,10 @@ def beq(linha, num, nome_arq):
     if(verificar == 0):
         print("ERRO: immediate maior que 12 bits!")
         return
-    imm10_5 = immediate[0:7]
-    imm4_1 = immediate[7:12]
-    resultado = imm10_5 + str(rs2) + str(rs1) + funct3 + imm4_1 + opcode
+    
+    resultado = immediate[0] + immediate[1:7] + str(rs2) + str(rs1) + funct3 + immediate[7:11] + immediate[11] + opcode
+    #resultado = immediate[0] + immediate[2:8] + str(rs2) + str(rs1) + funct3 + immediate[8:12] + immediate[11] + opcode
+    print(resultado)
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
     criar.criarArquivo_bin(resultado, num, nome_arq)
@@ -744,12 +745,8 @@ def j(linha, num, nome_arq):
         immediate = bin(immediate)[2:]
         immediate = format(int(immediate, 2), '020b')
 
-    immediate4 = immediate[0]
-    immediate3 = immediate[9:20]
-    immediate2 = immediate[8]
-    immediate1 = immediate[1:8]
-    
-    resultado = immediate4 + immediate3 + immediate2 + immediate1 + rd + opcode
+    resultado = immediate[0] + immediate[9:20] + immediate[8] + immediate[1:8] + rd + opcode
+    print(resultado)
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
     criar.criarArquivo_bin(resultado, num, nome_arq)
