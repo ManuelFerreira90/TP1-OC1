@@ -17,7 +17,6 @@ def lerArquivo(arquivo):
             arq1.truncate(0)
             arq1.close()
             
-
         with open("Projeto/Arquivos_teste/"+arquivo) as arq:
             texto = arq.readlines()
             print("\nConteudo:")
@@ -27,12 +26,8 @@ def lerArquivo(arquivo):
                 linha = linha.replace("\n","") #removendo "\n"
                 print(linha)
                 linha = linha.replace(",","") #removendo vírgulas
-                #armazendo cada comando em uma posição do vetor
-                #x = linha.split(" ")
-                #identificando cada instrução
-                #removendo parenteses
-                linha = linha.replace("("," ")
-                linha = linha.replace(")"," ")
+                linha = linha.replace("("," ") #removendo parenteses
+                linha = linha.replace(")"," ")  #removendo parenteses
                 linha = linha.split(" ")
                 num = 1
                 mont.indentificar_funcao(linha, num, arquivo)

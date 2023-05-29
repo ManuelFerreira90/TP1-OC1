@@ -138,24 +138,16 @@ def sw(linha, num, nome_arq):
     rs1 = bin(int(rs1))[2:]
     rs1 = format(int(rs1, 2), '05b') #preenchendo rs1 para 5bits
     immediate = linha[2]
-    
     x = len(immediate)
-    
-    #verificando se o immediate cabe em 12 bits
-    x = len(immediate)
-    verificar = verificar_immediate(immediate, x, h, c, b)
+    verificar = verificar_immediate(immediate, x, h, c, b)#verificando se o immediate cabe em 12 bits
     if(verificar == 0):
         print("ERRO: immediate maior que 12 bits!")
         return
-    
     #converter immediate
-    immediate = converter_immediate(immediate, x, h, c, b)
-    
+    immediate = converter_immediate(immediate, x, h, c, b) 
     immediate1 = immediate[0:7]
     immediate2 = immediate[7:12]
-    
     resultado = immediate1 + str(rs2) + str(rs1) + funct3 + immediate2 + opcode
-
     resultado_hex = converter_oc_e_hex(resultado, 2)
     resultado_octal = converter_oc_e_hex(resultado, 3)
     criar.criarArquivo_bin(resultado, num, nome_arq)

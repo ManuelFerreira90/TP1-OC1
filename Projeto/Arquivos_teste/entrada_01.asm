@@ -6,6 +6,7 @@ srl x7, x7, x6
 xor x9, x10, x12
 beq x28, x29, 1444
 jalr x5, x1, -100
+
 mv x5, x2
 not x6, x6
 li x5, 0c4001

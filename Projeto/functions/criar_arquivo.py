@@ -16,7 +16,6 @@ def criarArquivo_bin(instrucao, num, nome):
             arq.write("0b" + instrucao + " - " + "0c" + octal + " - " + "0x" + hex_ + "\n")
             arq.close()
     
-
 def criarArquivo_hex(instrucao, num, nome):
     nomeArq = str(nome).replace(".asm", "")
     if num == 1: #Para leitura de arquivo 
