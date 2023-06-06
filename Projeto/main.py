@@ -12,7 +12,7 @@ while(num != 9):
     #Limpar tela do terminal
     os.system('clear')
     if num == 1:
-        pasta = "./Projeto/Arquivos_teste/"
+        pasta = "Arquivos_teste/"
         files = os.listdir(pasta) 
         tam = len(files)
         print("ARQUIVOS: \n")

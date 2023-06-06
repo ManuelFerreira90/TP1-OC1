@@ -4,20 +4,20 @@ def lerArquivo(arquivo):
     
     try:
         nomeArq = str(arquivo).replace(".asm", "")
-        with open("Projeto/Arquivos_saida/output_"+ nomeArq +".txt", "w") as arq1:
+        with open("Arquivos_saida/output_"+ nomeArq +".txt", "w") as arq1:
             arq1.truncate(0)
             arq1.close()
-        with open("Projeto/Arquivos_saida/Binario/output_"+ nomeArq +".txt", "w") as arq1:
+        with open("Arquivos_saida/Binario/output_"+ nomeArq +".txt", "w") as arq1:
             arq1.truncate(0)
             arq1.close()
-        with open("Projeto/Arquivos_saida/Hexadecimal/output_"+ nomeArq +".txt", "w") as arq1:
+        with open("Arquivos_saida/Hexadecimal/output_"+ nomeArq +".txt", "w") as arq1:
             arq1.truncate(0)
             arq1.close()
-        with open("Projeto/Arquivos_saida/Octal/output_"+ nomeArq +".txt", "w") as arq1:
+        with open("Arquivos_saida/Octal/output_"+ nomeArq +".txt", "w") as arq1:
             arq1.truncate(0)
             arq1.close()
             
-        with open("Projeto/Arquivos_teste/"+arquivo) as arq:
+        with open("Arquivos_teste/"+arquivo) as arq:
             texto = arq.readlines()
             print("\nConteudo:")
             #variavel para armzenar cada linha do comando em assembly
@@ -57,7 +57,7 @@ def mostrar_conteudo(x):
     try:
         print("")
         nomeArq = str(x).replace(".asm", "")
-        with open("Projeto/Arquivos_saida/output_" + nomeArq + ".txt") as arq1:
+        with open("Arquivos_saida/output_" + nomeArq + ".txt") as arq1:
             mostrar = arq1.read()
             print(mostrar)  
         arq1.close()
